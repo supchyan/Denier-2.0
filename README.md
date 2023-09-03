@@ -1,4 +1,4 @@
-# Denier-2.0
+# Denier 2.0
 
 Rework of the Denier Rifle Mod
 
