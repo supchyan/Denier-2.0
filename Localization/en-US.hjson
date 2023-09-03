@@ -1,0 +1,44 @@
+Mods: {
+	Denier: {
+		Items: {
+			rifle: {
+				DisplayName: Denier T.D.S.R.
+				Tooltip:
+					'''
+					Uses ∞ mana
+					Unlike normal guns, this one can shoot only when in [c/ff0000:Scoping Mode].
+					[c/ff0000:{☩} Scoping Mode]: Hold Right Click to charge a rifle. Left Click to take a shot.
+					As higher owner's movement speed and longer shooting distance as more damage rifle deals.
+					---
+					Holding a weapon grants to player [c/ff0000:Dash Point] (upon to 6).
+					[c/ff0000:{☩} Dash Point]: Left Click when not in [c/ff0000:Scoping Mode] to spend [c/ff0000:Dash Point] to make a dash.
+					---
+					The best magic invention of Divine Blacksmith.
+					'''
+				DamageInfo: Mods.Denier.Items.rifle.DamageInfo
+			}
+		}
+
+		Projectiles: {
+			rifleBullet.DisplayName: Denier Bullet
+			mainCircle.DisplayName: Forbidden magic
+			squares45degCursor.DisplayName: Forbidden magic
+			squares45deg.DisplayName: Forbidden magic
+			squaresCursor.DisplayName: Forbidden magic
+			squaresOutCursor.DisplayName: Forbidden magic
+			squaresOut.DisplayName: Forbidden magic
+			squares.DisplayName: Forbidden magic
+			texts.DisplayName: Forbidden magic
+			coolEffect.DisplayName: cool Effect
+			coolEffectAlt.DisplayName: cool Effect Alt
+			shell.DisplayName: shell
+		}
+
+		Buffs: {
+			coolDownBuff: {
+				Description: You can't scope right now
+				DisplayName: Rifle cooldown
+			}
+		}
+	}
+}

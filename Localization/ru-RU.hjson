@@ -1,0 +1,44 @@
+Mods: {
+	Denier: {
+		Items: {
+			rifle: {
+				DisplayName: Отрицатель T.D.S.R.
+				Tooltip:
+					'''
+					Использует ∞ ед. маны
+					В отличии от других пушек, этот образец стреляет только в [c/ff0000:Режиме прицеливания].
+					[c/ff0000:{☩} Режим прицеливания]: Удерживайте Правую Кнопку Мыши, чтобы зарядить винтовку. Левая Кнопка Мыши, чтобы сделать выстрел.
+					Чем быстрее движется стрелок и чем дальше летит пуля, тем выше наносимый урон.
+					---
+					Пока вы держите винтовку, она заряжает [c/ff0000:Очки рывков] (максимум: 6).
+					[c/ff0000:{☩} Очки рывков]: Левая Кнопка Мыши, когда не в [c/ff0000:Режиме прицеливания], чтобы потратить [c/ff0000:Очки рывков] и ускориться.
+					---
+					Лучшее магическое оружие, выкованное Божественным Кузнецом.
+					'''
+				// DamageInfo: Mods.Denier.Items.rifle.DamageInfo
+			}
+		}
+
+		Projectiles: {
+			rifleBullet.DisplayName: Пуля отрицания
+			mainCircle.DisplayName: Запретная магия
+			squares45degCursor.DisplayName: Запретная магия
+			squares45deg.DisplayName: Запретная магия
+			squaresCursor.DisplayName: Запретная магия
+			squaresOutCursor.DisplayName: Запретная магия
+			squaresOut.DisplayName: Запретная магия
+			squares.DisplayName: Запретная магия
+			texts.DisplayName: Запретная магия
+			// coolEffect.DisplayName: cool Effect
+			// coolEffectAlt.DisplayName: cool Effect Alt
+			// shell.DisplayName: shell
+		}
+
+		Buffs: {
+			coolDownBuff: {
+				Description: Ты не можешь прицеливаться сейчас
+				DisplayName: Перезарядка винтовки
+			}
+		}
+	}
+}
