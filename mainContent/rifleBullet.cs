@@ -49,7 +49,7 @@ namespace Denier.mainContent {
             bulletDamage = oldDamage * (
                                 ((Math.Abs(distance.X) + Math.Abs(distance.Y)) / 50f) +
                                 Math.Abs(oldPlayerVelocity.X) + Math.Abs(oldPlayerVelocity.Y)
-                            ) / 12f;
+                            ) / 10f;
             bulletCrit = oldCrit + (
                                 ((Math.Abs(distance.X) + Math.Abs(distance.Y)) / 50f) +
                                 Math.Abs(oldPlayerVelocity.X) + Math.Abs(oldPlayerVelocity.Y)

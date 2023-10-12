@@ -29,7 +29,6 @@ namespace Denier.mainContent {
         private int rd;
 
         public override void SetDefaults() {
-
             Item.damage = 250;
             Item.width = 65;
             Item.height = 17;
@@ -44,7 +43,6 @@ namespace Denier.mainContent {
             Item.rare = 10;
             Item.shoot = ModContent.ProjectileType<rifleBullet>();
             Item.shootSpeed = 40f;
-        
         }
         public override bool PreDrawInWorld(SpriteBatch spriteBatch, Color lightColor, Color alphaColor, ref float rotation, ref float scale, int whoAmI) {
             
@@ -62,16 +60,13 @@ namespace Denier.mainContent {
 
         }
         public override void ModifyTooltips(List<TooltipLine> tooltips) {  
-
             foreach (TooltipLine line in tooltips) {
 				if (line.Mod == "Terraria" && line.Name == "Damage") {
 					line.OverrideColor = Main.errorColor;
                     line.Text = "0 -> ∞";
 				}
 			}
-
         }
-
         public override bool Shoot(Player player, EntitySource_ItemUse_WithAmmo source, Vector2 position, Vector2 velocity, int type, int damage, float knockback) {
             
             Item.autoReuse = false;
@@ -103,7 +98,6 @@ namespace Denier.mainContent {
                     );
 
                 return true;
-
             }
             else if (!Main.mouseRight && dashCount > 0 && player.statMana >= 10) {
 
@@ -125,7 +119,6 @@ namespace Denier.mainContent {
 
             }
             else return false;
-
         }
         public override void HoldItem(Player player) {
 
@@ -160,9 +153,7 @@ namespace Denier.mainContent {
                         Projectile.GetSource_None(), player.Center, player.velocity,
                         ModContent.ProjectileType<mainCircle>(), 0, 0, player.whoAmI
                     );
-
-                }
-                                      
+                }                      
             }
             else if(!Main.mouseRight && squares.canShoot) {
 
@@ -175,7 +166,6 @@ namespace Denier.mainContent {
         public override Vector2? HoldoutOffset() {
 
 			return new Vector2(-13f, -1f);
-		
         }
         public override void AddRecipes() {
 
@@ -183,7 +173,7 @@ namespace Denier.mainContent {
                 .AddIngredient(ItemID.Handgun)
                 .AddIngredient(ItemID.TitaniumBar, 75)
                 .AddIngredient(ItemID.Wire, 75)
-				.AddIngredient(ItemID.DemonHeart)
+				.AddIngredient(ItemID.GreaterManaPotion, 25)
 				.AddTile(TileID.MythrilAnvil)
 				.Register();
 
@@ -191,10 +181,9 @@ namespace Denier.mainContent {
                 .AddIngredient(ItemID.Handgun)
                 .AddIngredient(ItemID.AdamantiteBar, 75)
                 .AddIngredient(ItemID.Wire, 75)
-				.AddIngredient(ItemID.DemonHeart)
+				.AddIngredient(ItemID.GreaterManaPotion, 25)
 				.AddTile(TileID.MythrilAnvil)
 				.Register();
-
 		}
     }
     public class playerStuff : ModPlayer {
@@ -204,7 +193,6 @@ namespace Denier.mainContent {
                 Main.screenPosition = Main.MouseWorld - new Vector2(Main.screenWidth / 2f, Main.screenHeight / 2f) - (Main.MouseWorld - Main.LocalPlayer.Center)/2f;
                 rifle.scope = false;
             }
-        
         }
         public override void PreUpdate() {
 
@@ -213,7 +201,6 @@ namespace Denier.mainContent {
             if (Main.LocalPlayer.HeldItem.ModItem is not rifle) {
                 rifle.dashCount = 0;
             }
-        
         }
     }
 }

@@ -10,5 +10,5 @@
     Handgun;
     Titanium Bar (Adamantite Bar) x75;
     Wire x75;
-    DemonHeart x1.
+    Greater Mana Potion x25.
 ---

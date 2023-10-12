@@ -40,5 +40,7 @@ Mods: {
 				DisplayName: Перезарядка винтовки
 			}
 		}
+
+		UI.counterText: Кол-во рывков
 	}
 }
