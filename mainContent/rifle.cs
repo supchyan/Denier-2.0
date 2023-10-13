@@ -91,8 +91,8 @@ namespace Denier.mainContent {
 		}
         public override bool Shoot(Player player, EntitySource_ItemUse_WithAmmo source, Vector2 position, Vector2 velocity, int type, int damage, float knockback) {
 
-            if (player.altFunctionUse == 0 && Main.mouseRight && squares.projCanShoot && player.statMana >= 15) {
-                squares.projCanShoot = false;
+            if (player.altFunctionUse == 0 && Main.mouseRight && squares.canShoot && player.statMana >= 15) {
+                squares.canShoot = false;
 
                 SoundEngine.PlaySound(shotSound with {MaxInstances = 3});
 

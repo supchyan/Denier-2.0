@@ -29,13 +29,15 @@ namespace Denier.mainContent.spiritalCircle {
             Player player = Main.player[Projectile.owner];
 
             projPos = player.Center - new Vector2(Projectile.width / 2f, Projectile.height / 2f);
-            projRot = squares.oldRot + MathHelper.ToRadians(-Projectile.ai[1]) + MathHelper.ToRadians(45);
+            projRot = -squares.projRot + MathHelper.ToRadians(45);
             projScl = 0f;
             projOpa = 0.8f;        
         }
         public override void AI() {
             Projectile.ai[0]++;
-            Projectile.ai[1]++;
+            if(!squares.canShoot) {
+                Projectile.ai[1]++;
+            }
             Projectile.timeLeft = 2;
 
             if (Main.myPlayer == Projectile.owner)
@@ -44,14 +46,11 @@ namespace Denier.mainContent.spiritalCircle {
             Player player = Main.player[Projectile.owner];
 
             projPos = player.Center - new Vector2(Projectile.width / 2f, Projectile.height / 2f);
-            projRot = squares.oldRot + MathHelper.ToRadians(-Projectile.ai[1]) + MathHelper.ToRadians(45);
+            projRot = -squares.projRot + MathHelper.ToRadians(45);
             
             while(Projectile.ai[0] <= 20f) {
                 projScl = Projectile.ai[0] / 20f;
                 break;
-            }
-            if(squares.canShoot) {
-                Projectile.ai[1] = 0;
             }
             if(!player.HasBuff<scopingBuff>() || player.dead) {
                 projOpa -= 0.2f;

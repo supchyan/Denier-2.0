@@ -31,43 +31,41 @@ namespace Denier.mainContent.spiritalCircle {
             Projectile.netUpdate = true;
         }
         public Vector2 projPos;
-        public double projRot;
+        public static double projRot;
         public double projScl;
         public double projOpa;
-        public static bool projCanShoot;
         public override void OnSpawn(IEntitySource source) {
             Player player = Main.player[Projectile.owner];
 
             projPos = player.Center - new Vector2(Projectile.width / 2f, Projectile.height / 2f);
-            projRot = oldRot + MathHelper.ToRadians(Projectile.ai[1]);
+            projRot = 0f;
             projScl = 0f;
-            projOpa = 0.8f; 
-            projCanShoot = false;       
+            projOpa = 0.8f;      
         }
         public override void AI() {
             Projectile.ai[0]++;
-            Projectile.ai[1]++;
+            if(!canShoot) {
+                Projectile.ai[1]++;
+            }
             Projectile.timeLeft = 2;
 
             Player player = Main.player[Projectile.owner];
 
             projPos = player.Center - new Vector2(Projectile.width / 2f, Projectile.height / 2f);
-            projRot = oldRot + MathHelper.ToRadians(Projectile.ai[1]);
+            projRot = MathHelper.ToRadians(Projectile.ai[1]);
+
             while(Projectile.ai[0] <= 20f) {
                 projScl = Projectile.ai[0] / 20f;
                 break;
             }
-            if ((Projectile.ai[1] + 2) % 45/2 == 0 && !projCanShoot) {
-                projCanShoot = true;
+            if(Projectile.ai[1] % 45 == 0 && !canShoot) {
+                canShoot = true;
                 playItOneTime = true;
                 squaresCursor.playItOneTime = true;
 
                 oldRot = Projectile.rotation;
             }
-            if(projCanShoot) {
-                Projectile.ai[1] = 0;
-                projRot = oldRot;
-
+            if(canShoot) {
                 if(player.statMana >= 15 && playItOneTime) {
                     playItOneTime = false;
 
@@ -79,6 +77,7 @@ namespace Denier.mainContent.spiritalCircle {
                     );
                 }   
             }
+
             if(!player.HasBuff<scopingBuff>() || player.dead) {
                 projOpa -= 0.2f;
                 projScl += 0.1f;
@@ -87,7 +86,6 @@ namespace Denier.mainContent.spiritalCircle {
             Projectile.rotation = (float)projRot;
             Projectile.scale = (float)projScl;
             Projectile.Opacity = (float)projOpa;
-            canShoot = projCanShoot;
                 
             if(player.HeldItem.ModItem is not rifle || Projectile.Opacity <= 0.2f)
                 Projectile.Kill();
@@ -112,7 +110,6 @@ namespace Denier.mainContent.spiritalCircle {
 
 			Color drawColor = Projectile.GetAlpha(lightColor);
 
-
 			Main.EntitySpriteDraw(texture,
 				Projectile.Center - Main.screenPosition + new Vector2(0f, Projectile.gfxOffY),
 				sourceRectangle, drawColor, Projectile.rotation, origin, Projectile.scale * 0.75f, spriteEffects, 0);
@@ -121,17 +118,13 @@ namespace Denier.mainContent.spiritalCircle {
 		}
         public override void SendExtraAI(BinaryWriter writer) {
 			writer.WriteVector2(projPos);
-            writer.Write(projRot);
             writer.Write(projScl);
             writer.Write(projOpa);
-            writer.Write(projCanShoot);
 		}
         public override void ReceiveExtraAI(BinaryReader reader) {
             projPos = reader.ReadVector2();
-            projRot = reader.ReadDouble();
             projScl = reader.ReadDouble();
             projOpa = reader.ReadDouble();
-            projCanShoot = reader.ReadBoolean();
         }
     }
 }

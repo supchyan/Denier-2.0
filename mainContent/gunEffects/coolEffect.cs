@@ -70,7 +70,6 @@ namespace Denier.mainContent.gunEffects {
                 );
                 projRot = player.itemRotation + MathHelper.ToRadians(180);
             }
-            
 
             Projectile.position = projPos;
             Projectile.velocity = projVel;
