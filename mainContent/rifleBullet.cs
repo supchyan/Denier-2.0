@@ -19,6 +19,7 @@ namespace Denier.mainContent {
             Projectile.tileCollide = false;
             Projectile.penetrate = -1;
             Projectile.netImportant = true;
+            Projectile.netUpdate = true;
         }
 
         private float bulletDamage;

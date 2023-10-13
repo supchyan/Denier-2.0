@@ -4,7 +4,8 @@ using Microsoft.Xna.Framework.Graphics;
 using Terraria;
 using Terraria.DataStructures;
 using Terraria.ModLoader;
-using Denier.mainContent.spiritalCircle.spiritalCursorMarker;
+using Denier.mainContent.Buffs;
+using System.IO;
 
 namespace Denier.mainContent.spiritalCircle {
     public class mainCircle : ModProjectile {
@@ -13,69 +14,57 @@ namespace Denier.mainContent.spiritalCircle {
             Projectile.height = 128;
             Projectile.damage = 0;
             Projectile.penetrate = -1;
-            Projectile.netImportant = true;
             Projectile.tileCollide = false;
             Projectile.Opacity = 0.8f;
             Projectile.ignoreWater = true;
+            Projectile.netImportant = true;
+            Projectile.netUpdate = true;
         }
+        public Vector2 projPos;
+        public double projRot;
+        public double projScl;
+        public double projOpa;
         public override void OnSpawn(IEntitySource source) {
-
             Player player = Main.player[Projectile.owner];
-            
-            Projectile.position = player.Center - new Vector2(Projectile.width / 2f, Projectile.height / 2f);
-            Projectile.rotation = MathHelper.ToRadians(Projectile.ai[0] * 0.5f);
 
-            Projectile.NewProjectile(default, player.Center, player.velocity, ModContent.ProjectileType<texts>(), 0, 0, player.whoAmI);
-            Projectile.NewProjectile(default, player.Center, player.velocity, ModContent.ProjectileType<squares>(), 0, 0, player.whoAmI);
-            Projectile.NewProjectile(default, player.Center, player.velocity, ModContent.ProjectileType<squares45deg>(), 0, 0, player.whoAmI);
-            Projectile.NewProjectile(default, player.Center, player.velocity, ModContent.ProjectileType<squaresCursor>(), 0, 0, player.whoAmI);
-            Projectile.NewProjectile(default, player.Center, player.velocity, ModContent.ProjectileType<squares45degCursor>(), 0, 0, player.whoAmI);
-        
+            projPos = player.Center - Projectile.Center;
+            projRot = MathHelper.ToRadians(Projectile.ai[0] * 0.5f);
+            projScl = 0f;
+            projOpa = 0.8f;
         }
         public override void AI() {
-
+            Projectile.ai[0]++;
             Projectile.timeLeft = 2;
-            Projectile.damage = 0;
-
-            if (Main.myPlayer == Projectile.owner)
-                Projectile.netUpdate = true;
+            // Projectile.damage = 0;
 
             Player player = Main.player[Projectile.owner];
 
-            Projectile.velocity = player.Center - Projectile.Center;
-
-            if (!squares.canShoot)
-                Projectile.rotation = MathHelper.ToRadians(Projectile.ai[0] * 0.5f);
-            else
-                Projectile.rotation = MathHelper.ToRadians(-Projectile.ai[0] * 0.5f);
-
+            projPos = player.Center - new Vector2(Projectile.width/2f,Projectile.height/2f);
+            if (!squares.canShoot) {
+                projRot = MathHelper.ToRadians(Projectile.ai[0] * 0.5f);
+            } else {
+                projRot = MathHelper.ToRadians(-Projectile.ai[0] * 0.3f);
+            }
             while(Projectile.ai[0] <= 20f) {
-                Projectile.scale = Projectile.ai[0] / 20f;
+                projScl = Projectile.ai[0] / 20f;
                 break;
-
+            }
+            
+            if(!player.HasBuff<scopingBuff>() || player.dead) {
+                projOpa -= 0.2f;
+                projScl += 0.1f;
             }
 
-            Projectile.ai[0]++;
-        
-            if(!Main.mouseRight || player.dead) {
-                
-                player.AddBuff(ModContent.BuffType<coolDownBuff>(), 25);
-
-            }
-            if(player.HasBuff<coolDownBuff>() || player.dead) {
-
-                Projectile.Opacity -= 0.2f;
-                Projectile.scale += 0.1f;
-                
-            }
+            Projectile.position = projPos;
+            Projectile.rotation = (float)projRot;
+            Projectile.scale = (float)projScl;
+            Projectile.Opacity = (float)projOpa;
                 
             if(player.HeldItem.ModItem is not rifle || Projectile.Opacity <= 0.2f) {
                 Projectile.Kill();
-            }
-                
+            }   
         }
         public override Color? GetAlpha(Color lightColor) {
-            
             if(squares.canShoot && Main.LocalPlayer.statMana >= 15) {
                 Lighting.AddLight(Projectile.Center, 0.5f, 0f, 0f);
                 return new Color(255, 0, 0, 255) * Projectile.Opacity;
@@ -83,15 +72,12 @@ namespace Denier.mainContent.spiritalCircle {
             else if(squares.canShoot && Main.LocalPlayer.statMana < 15) {
                 return Color.Gray * Projectile.Opacity;
             }
-			    
             else {
                 Lighting.AddLight(Projectile.Center, 0.5f, 0.5f, 0.5f);
                 return new Color(255, 255, 255, 255) * Projectile.Opacity;
             }
-
 		}
         public override bool PreDraw(ref Color lightColor) {
-
 			SpriteEffects spriteEffects = SpriteEffects.None;
 
 			Texture2D texture = (Texture2D)ModContent.Request<Texture2D>(Texture);
@@ -109,7 +95,18 @@ namespace Denier.mainContent.spiritalCircle {
 				sourceRectangle, drawColor, Projectile.rotation, origin, Projectile.scale * 0.75f, spriteEffects, 0);
 
 			return false;
-            
 		}
+        public override void SendExtraAI(BinaryWriter writer) {
+			writer.WriteVector2(projPos);
+            writer.Write(projRot);
+            writer.Write(projScl);
+            writer.Write(projOpa);
+		}
+        public override void ReceiveExtraAI(BinaryReader reader) {
+            projPos = reader.ReadVector2();
+            projRot = reader.ReadDouble();
+            projScl = reader.ReadDouble();
+            projOpa = reader.ReadDouble();
+        }
     }
 }

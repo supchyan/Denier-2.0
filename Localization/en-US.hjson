@@ -29,15 +29,21 @@ Mods: {
 			squaresOut.DisplayName: Forbidden magic
 			squares.DisplayName: Forbidden magic
 			texts.DisplayName: Forbidden magic
-			coolEffect.DisplayName: cool Effect
-			coolEffectAlt.DisplayName: cool Effect Alt
-			shell.DisplayName: shell
+			coolEffect.DisplayName: Forbidden magic
+			coolEffectAlt.DisplayName: Forbidden magic
+			shell.DisplayName: Gun shell
+			sigil.DisplayName: Forbidden magic
 		}
 
 		Buffs: {
 			coolDownBuff: {
+				DisplayName: Denier is on cooldown
 				Description: You can't scope right now
-				DisplayName: Rifle cooldown
+			}
+
+			scopingBuff: {
+				DisplayName: Scoping Process
+				Description: You're scoping right now!
 			}
 		}
 

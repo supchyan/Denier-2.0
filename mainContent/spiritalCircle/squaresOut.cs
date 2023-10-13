@@ -4,6 +4,7 @@ using Microsoft.Xna.Framework.Graphics;
 using Terraria;
 using Terraria.DataStructures;
 using Terraria.ModLoader;
+using System.IO;
 
 namespace Denier.mainContent.spiritalCircle {
     public class squaresOut : ModProjectile {
@@ -15,55 +16,56 @@ namespace Denier.mainContent.spiritalCircle {
             Projectile.hostile = false;
             Projectile.scale = 1f;
             Projectile.penetrate = -1;
-            Projectile.netImportant = true;
             Projectile.tileCollide = false;
             Projectile.Opacity = 2f;
             Projectile.ignoreWater = true;
+            Projectile.netImportant = true;
+            Projectile.netUpdate = true;
         }
+        public Vector2 projPos;
+        public double projRot;
+        public double projScl;
+        public double projOpa;
         public override void OnSpawn(IEntitySource source) {
-
             Player player = Main.player[Projectile.owner];
 
-            Projectile.position = player.Center - new Vector2(Projectile.width / 2f, Projectile.height / 2f);
-            Projectile.rotation = squares.oldRot;
-        
+            projPos = player.Center - new Vector2(Projectile.width / 2f, Projectile.height / 2f);
+            projRot = squares.oldRot;
+            projScl = 1f;
+            projOpa = 2f;
         }
         public override void AI() {
-
+            Projectile.ai[1]++;
             Projectile.timeLeft = 2;
-            if (Main.myPlayer == Projectile.owner)
-                Projectile.netUpdate = true;
 
             Player player = Main.player[Projectile.owner];
 
-            Projectile.velocity = player.Center - Projectile.Center;
-            Projectile.rotation = squares.oldRot;
+            projPos = player.Center - new Vector2(Projectile.width / 2f, Projectile.height / 2f);
+            projRot = squares.oldRot;
 
             double lerpValue = Projectile.ai[1]/lifeTime;
 
             if (Projectile.ai[1] <= lifeTime) {
-                Projectile.scale = MathHelper.Lerp(Projectile.scale, 2f, (float)Math.Sqrt(lerpValue)/2);
-                Projectile.Opacity = MathHelper.Lerp(Projectile.Opacity, 0, (float)Math.Sqrt(lerpValue)/2);
+                projScl = MathHelper.Lerp(Projectile.scale, 2f, (float)Math.Sqrt(lerpValue)/2);
+                projOpa = MathHelper.Lerp(Projectile.Opacity, 0, (float)Math.Sqrt(lerpValue)/2);
             }
-
-            if (Projectile.Opacity <= 0.1f) {
+            if (projOpa <= 0.01f) {
                 Projectile.Kill();
             }
-
-            Projectile.ai[1]++;
+            Projectile.position = projPos;
+            Projectile.rotation = (float)projRot;
+            Projectile.scale = (float)projScl;
+            Projectile.Opacity = (float)projOpa;
         }
         public override Color? GetAlpha(Color lightColor) {
-            
             if(squares.canShoot && Main.LocalPlayer.statMana >= 15)
 			    return new Color(255, 0, 0, 255) * Projectile.Opacity;
             else if(squares.canShoot && Main.LocalPlayer.statMana < 15)
 			    return Color.Gray * Projectile.Opacity;
             else
                 return new Color(255, 255, 255, 255) * Projectile.Opacity;
-
 		}
         public override bool PreDraw(ref Color lightColor) {
-
 			SpriteEffects spriteEffects = SpriteEffects.None;
 
 			Texture2D texture = (Texture2D)ModContent.Request<Texture2D>(Texture);
@@ -81,7 +83,18 @@ namespace Denier.mainContent.spiritalCircle {
 				sourceRectangle, drawColor, Projectile.rotation, origin, Projectile.scale * 0.75f, spriteEffects, 0);
 
 			return false;
-            
 		}
+        public override void SendExtraAI(BinaryWriter writer) {
+			writer.WriteVector2(projPos);
+            writer.Write(projRot);
+            writer.Write(projScl);
+            writer.Write(projOpa);
+		}
+        public override void ReceiveExtraAI(BinaryReader reader) {
+            projPos = reader.ReadVector2();
+            projRot = reader.ReadDouble();
+            projScl = reader.ReadDouble();
+            projOpa = reader.ReadDouble();
+        }
     }
 }

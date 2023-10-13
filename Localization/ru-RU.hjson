@@ -29,15 +29,21 @@ Mods: {
 			squaresOut.DisplayName: Запретная магия
 			squares.DisplayName: Запретная магия
 			texts.DisplayName: Запретная магия
-			// coolEffect.DisplayName: cool Effect
-			// coolEffectAlt.DisplayName: cool Effect Alt
-			// shell.DisplayName: shell
+			coolEffect.DisplayName: Запретная магия
+			coolEffectAlt.DisplayName: Запретная магия
+			shell.DisplayName: Гильза
+			sigil.DisplayName: Запретная магия
 		}
 
 		Buffs: {
 			coolDownBuff: {
-				Description: Ты не можешь прицеливаться сейчас
-				DisplayName: Перезарядка винтовки
+				DisplayName: Отрицатель на перезарядке
+				Description: Вы не можете прицеливаться сейчас
+			}
+
+			scopingBuff: {
+				DisplayName: В процессе прицеливания
+				Description: Вы прицеливаетесь прямо сейчас!
 			}
 		}
 
