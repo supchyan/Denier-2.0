@@ -43,7 +43,7 @@ namespace Denier.mainContent {
             Item.useTime = 60;
             Item.useAnimation = 60;
             Item.knockBack = 10;
-            Item.mana = 15;
+            Item.mana = 10;
             Item.rare = 10;
             Item.shoot = ModContent.ProjectileType<rifleBullet>();
             Item.shootSpeed = 40f;
@@ -92,11 +92,11 @@ namespace Denier.mainContent {
             }
 		}
         public override bool Shoot(Player player, EntitySource_ItemUse_WithAmmo source, Vector2 position, Vector2 velocity, int type, int damage, float knockback) {
-
-            if (player.altFunctionUse == 0 && Main.mouseRight && squares.canShoot && player.statMana >= 15) {
+            if (player.altFunctionUse == 0 && Main.mouseRight && squares.canShoot) {
                 squares.canShoot = false;
                 squares.rotRes = true;
                 squares45deg.rotRes = true;
+
 
                 SoundEngine.PlaySound(shotSound with {MaxInstances = 3});
 
