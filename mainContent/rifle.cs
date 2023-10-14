@@ -40,9 +40,10 @@ namespace Denier.mainContent {
             Item.noMelee = true;
             Item.useStyle = ItemUseStyleID.Shoot;
             Item.autoReuse = false;
-            Item.useTime = 47;
-            Item.useAnimation = 47;
+            Item.useTime = 60;
+            Item.useAnimation = 60;
             Item.knockBack = 10;
+            Item.mana = 15;
             Item.rare = 10;
             Item.shoot = ModContent.ProjectileType<rifleBullet>();
             Item.shootSpeed = 40f;
@@ -75,17 +76,18 @@ namespace Denier.mainContent {
             if (!Main.mouseRight && player.statMana >= 10 && dashCount > 0) {
 				Item.useTime = 20;
 				Item.useAnimation = 20;
+                Item.mana = 10;
                 return true;
-			}
-            else if (!Main.mouseRight && (player.statMana < 10 || dashCount == 0)) {
+			} else if (!Main.mouseRight && (player.statMana < 10 || dashCount == 0)) {
                 return false;
-			}
-			else if(Main.mouseRight && player.statMana < 15) {
+			} else if(Main.mouseRight && player.statMana < 15) {
                 return false;
-            }
-            else {
-                Item.useTime = 47;
-				Item.useAnimation = 47;
+            } else if(Main.mouseRight && !squares.canShoot) {
+                return false;
+            } else {
+                Item.useTime = 60;
+				Item.useAnimation = 60;
+                Item.mana = 15;
                 return true;
             }
 		}
@@ -93,10 +95,10 @@ namespace Denier.mainContent {
 
             if (player.altFunctionUse == 0 && Main.mouseRight && squares.canShoot && player.statMana >= 15) {
                 squares.canShoot = false;
+                squares.rotRes = true;
+                squares45deg.rotRes = true;
 
                 SoundEngine.PlaySound(shotSound with {MaxInstances = 3});
-
-                player.statMana -= 15;
 
                 if(rd > 0) {
                     Projectile.NewProjectile(
@@ -136,8 +138,6 @@ namespace Denier.mainContent {
                 player.velocity = player.velocity.DirectionTo((player.Center - Main.MouseWorld))*20f;
 
                 SoundEngine.PlaySound(bassSound with {MaxInstances = 3});
-
-                player.statMana -= 10;
 
                 return false;
 
@@ -195,22 +195,22 @@ namespace Denier.mainContent {
                         ModContent.ProjectileType<squares45deg>(), 0, 0, player.whoAmI
                     );
                 } 
-                if (player.whoAmI == Main.myPlayer && player.ownedProjectileCounts[ModContent.ProjectileType<squaresCursor>()] == 0) {
-                    Projectile.NewProjectile(
-                        Projectile.GetSource_None(),
-                        player.Center,
-                        Vector2.Zero,
-                        ModContent.ProjectileType<squaresCursor>(), 0, 0, player.whoAmI
-                    );
-                } 
-                if (player.whoAmI == Main.myPlayer && player.ownedProjectileCounts[ModContent.ProjectileType<squares45degCursor>()] == 0) {
-                    Projectile.NewProjectile(
-                        Projectile.GetSource_None(),
-                        player.Center,
-                        Vector2.Zero,
-                        ModContent.ProjectileType<squares45degCursor>(), 0, 0, player.whoAmI
-                    );
-                }                   
+                // if (player.whoAmI == Main.myPlayer && player.ownedProjectileCounts[ModContent.ProjectileType<squaresCursor>()] == 0) {
+                //     Projectile.NewProjectile(
+                //         Terraria.Entity.GetSource_None(),
+                //         player.Center,
+                //         Vector2.Zero,
+                //         ModContent.ProjectileType<squaresCursor>(), 0, 0, player.whoAmI
+                //     );
+                // } 
+                // if (player.whoAmI == Main.myPlayer && player.ownedProjectileCounts[ModContent.ProjectileType<squares45degCursor>()] == 0) {
+                //     Projectile.NewProjectile(
+                //         Projectile.GetSource_None(),
+                //         player.Center,
+                //         Vector2.Zero,
+                //         ModContent.ProjectileType<squares45degCursor>(), 0, 0, player.whoAmI
+                //     );
+                // }                   
             }
             else if(!Main.mouseRight && squares.canShoot) {
                 squares.canShoot = false;
