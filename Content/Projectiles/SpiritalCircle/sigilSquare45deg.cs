@@ -5,10 +5,11 @@ using Terraria;
 using Terraria.ModLoader;
 using Terraria.DataStructures;
 using System.IO;
-using Denier.mainContent.Buffs;
+using Denier.Content.Buffs;
+using Denier.Content.Items.Denier;
 
-namespace Denier.mainContent.spiritalCircle {
-    public class squares45deg : ModProjectile {
+namespace Denier.Content.Projectiles.SpiritalCircle {
+    public class sigilSquare45deg : ModProjectile {
         public override void SetDefaults() {
             Projectile.width = 128;
             Projectile.height = 128;
@@ -73,7 +74,7 @@ namespace Denier.mainContent.spiritalCircle {
             
             Projectile.position = projPos;
                 
-            if(player.HeldItem.ModItem is not rifle || Projectile.Opacity <= 0.2f)
+            if(player.HeldItem.ModItem is not denierRifle || Projectile.Opacity <= 0.2f)
                 Projectile.Kill();
         }
         public override Color? GetAlpha(Color lightColor) {

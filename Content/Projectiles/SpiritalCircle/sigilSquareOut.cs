@@ -5,9 +5,10 @@ using Terraria;
 using Terraria.DataStructures;
 using Terraria.ModLoader;
 using System.IO;
+using Denier.Content.Items.Denier;
 
-namespace Denier.mainContent.spiritalCircle {
-    public class squaresOut : ModProjectile {
+namespace Denier.Content.Projectiles.SpiritalCircle {
+    public class sigilSquareOut : ModProjectile {
         private float lifeTime = 30f;
         public override void SetDefaults() {
             Projectile.width = 128;
@@ -30,7 +31,7 @@ namespace Denier.mainContent.spiritalCircle {
             Player player = Main.player[Projectile.owner];
 
             projPos = player.Center - new Vector2(Projectile.width / 2f, Projectile.height / 2f);
-            projRot = squares.oldRot;
+            projRot = sigilSquare.oldRot;
             projScl = 1f;
             projOpa = 2f;
         }
@@ -41,7 +42,7 @@ namespace Denier.mainContent.spiritalCircle {
             Player player = Main.player[Projectile.owner];
 
             projPos = player.Center - new Vector2(Projectile.width / 2f, Projectile.height / 2f);
-            projRot = squares.oldRot;
+            projRot = sigilSquare.oldRot;
 
             double lerpValue = Projectile.ai[1]/lifeTime;
 
@@ -58,9 +59,9 @@ namespace Denier.mainContent.spiritalCircle {
             Projectile.Opacity = (float)projOpa;
         }
         public override Color? GetAlpha(Color lightColor) {
-            if(squares.canShoot && Main.LocalPlayer.statMana >= 15)
+            if(sigilSquare.canShoot && Main.LocalPlayer.statMana >= 15)
 			    return new Color(255, 0, 0, 255) * Projectile.Opacity;
-            else if(squares.canShoot && Main.LocalPlayer.statMana < 15)
+            else if(sigilSquare.canShoot && Main.LocalPlayer.statMana < 15)
 			    return Color.Gray * Projectile.Opacity;
             else
                 return new Color(255, 255, 255, 255) * Projectile.Opacity;

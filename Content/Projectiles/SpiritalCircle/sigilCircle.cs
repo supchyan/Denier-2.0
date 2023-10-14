@@ -2,18 +2,18 @@ using System;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Terraria;
-using Terraria.ModLoader;
 using Terraria.DataStructures;
+using Terraria.ModLoader;
+using Denier.Content.Buffs;
 using System.IO;
-using Denier.mainContent.Buffs;
+using Denier.Content.Items.Denier;
 
-namespace Denier.mainContent.spiritalCircle {
-    public class sigil : ModProjectile {
+namespace Denier.Content.Projectiles.SpiritalCircle {
+    public class sigilCircle : ModProjectile {
         public override void SetDefaults() {
             Projectile.width = 128;
             Projectile.height = 128;
-            Projectile.friendly = true;
-            Projectile.hostile = false;
+            Projectile.damage = 0;
             Projectile.penetrate = -1;
             Projectile.tileCollide = false;
             Projectile.Opacity = 1f;
@@ -47,10 +47,10 @@ namespace Denier.mainContent.spiritalCircle {
             }
 
             double e = 2.7182812;
-            float a = 360f; // max angle
+            float a = 120f; // max angle
             double b = -0.08759;
 
-            Projectile.rotation = -MathHelper.ToRadians(2*a*(float)Math.Pow(e,1.5f*b*Projectile.ai[1])*(float)Math.Sin(Projectile.ai[1]/6));
+            Projectile.rotation = MathHelper.ToRadians(2*a*(float)Math.Pow(e,1.5f*b*Projectile.ai[1])*(float)Math.Sin(Projectile.ai[1]/6));
 
             projPos = player.Center - new Vector2(Projectile.width / 2f, Projectile.height / 2f);
 
@@ -65,13 +65,13 @@ namespace Denier.mainContent.spiritalCircle {
                     Projectile.scale = 1f - 1f/(float)Math.Pow(e,Projectile.ai[0]/4f);
                 }
             }
-            if(player.altFunctionUse == 0 && squares.rotRes) {
+            if(player.altFunctionUse == 0 && sigilSquare.rotRes) {
                 Projectile.ai[1]=0;
             }
             
             Projectile.position = projPos;
                 
-            if(player.HeldItem.ModItem is not rifle || Projectile.Opacity <= 0.2f)
+            if(player.HeldItem.ModItem is not denierRifle || Projectile.Opacity <= 0.2f)
                 Projectile.Kill();
         }
         public override Color? GetAlpha(Color lightColor) {

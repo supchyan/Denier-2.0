@@ -7,8 +7,8 @@ using Terraria.Audio;
 using Terraria.ModLoader;
 using Microsoft.CodeAnalysis;
 
-namespace Denier.mainContent {
-    public class rifleBullet : ModProjectile {
+namespace Denier.Content.Items.Denier {
+    public class denierRifleBullet:ModProjectile {
         public override void SetDefaults() {
             Projectile.width = 25;
             Projectile.height = 25;
@@ -21,7 +21,6 @@ namespace Denier.mainContent {
             Projectile.netImportant = true;
             Projectile.netUpdate = true;
         }
-
         private float bulletDamage;
         private float bulletCrit;
         private Vector2 oldPlayerCenter;
@@ -30,13 +29,11 @@ namespace Denier.mainContent {
         private float oldCrit;
         private Vector2 distance;
         public override void OnSpawn(IEntitySource source) {
-
             oldDamage = Projectile.damage;
             oldCrit = Projectile.CritChance;
 
             oldPlayerCenter = Projectile.Center;
             oldPlayerVelocity = Main.LocalPlayer.velocity;
-
         }
         public override void AI() {
 
@@ -78,7 +75,7 @@ namespace Denier.mainContent {
             }
 
         }
-        public override void Kill(int timeLeft) {
+        public override void OnKill(int timeLeft) {
 
             for (int i = 0; i < 50; i++) {
                     Vector2 gigaVelocity = Main.rand.NextVector2CircularEdge(Projectile.width / 10f, Projectile.height / 10f);

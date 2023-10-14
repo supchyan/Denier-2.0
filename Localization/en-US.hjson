@@ -1,7 +1,7 @@
 Mods: {
 	Denier: {
 		Items: {
-			rifle: {
+			denierRifle: {
 				DisplayName: Denier T.D.S.R.
 				Tooltip:
 					'''
@@ -15,32 +15,23 @@ Mods: {
 					---
 					The best magic invention of Divine Blacksmith.
 					'''
-				DamageInfo: Mods.Denier.Items.rifle.DamageInfo
+				DamageInfo: ehe?
 			}
 		}
 
 		Projectiles: {
-			rifleBullet.DisplayName: Denier Bullet
-			mainCircle.DisplayName: Forbidden magic
-			squares45degCursor.DisplayName: Forbidden magic
-			squares45deg.DisplayName: Forbidden magic
-			squaresCursor.DisplayName: Forbidden magic
-			squaresOutCursor.DisplayName: Forbidden magic
-			squaresOut.DisplayName: Forbidden magic
-			squares.DisplayName: Forbidden magic
-			texts.DisplayName: Forbidden magic
+			denierRifleBullet.DisplayName: Denier Bullet
 			coolEffect.DisplayName: Forbidden magic
 			coolEffectAlt.DisplayName: Forbidden magic
 			shell.DisplayName: Gun shell
-			sigil.DisplayName: Forbidden magic
+			sigilCircle.DisplayName: Forbidden magic
+			sigilCircleSmall.DisplayName: Forbidden magic
+			sigilSquare.DisplayName: Forbidden magic
+			sigilSquare45deg.DisplayName: Forbidden magic
+			sigilSquareOut.DisplayName: Forbidden magic
 		}
 
 		Buffs: {
-			coolDownBuff: {
-				DisplayName: Denier is on cooldown
-				Description: You can't scope right now
-			}
-
 			scopingBuff: {
 				DisplayName: Scoping Process
 				Description: You're scoping right now!

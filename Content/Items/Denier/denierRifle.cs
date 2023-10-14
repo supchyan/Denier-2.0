@@ -13,15 +13,14 @@ using Terraria.Localization;
 using Terraria.GameContent;
 using Terraria.GameContent.Events;
 using Denier;
-using Denier.mainContent.Buffs;
-using Denier.mainContent.spiritalCircle;
-using Denier.mainContent.gunEffects;
-using Denier.mainContent.spiritalCircle.spiritalCursorMarker;
+using Denier.Content.Buffs;
+using Denier.Content.Projectiles.SpiritalCircle;
+using Denier.Content.GunEffects;
 
-namespace Denier.mainContent {
-    public class rifle : ModItem {
+namespace Denier.Content.Items.Denier {
+    public class denierRifle : ModItem {
         
-        public override string Texture => "Denier/mainContent/rifleNoOutline";
+        public override string Texture => "Denier/Content/Items/Denier/denierRifleNoOutline";
         SoundStyle shotSound = new SoundStyle("Denier/Sounds/shot");
         SoundStyle bassSound = new SoundStyle("Denier/Sounds/bass");
         public static int dashCount;
@@ -45,11 +44,11 @@ namespace Denier.mainContent {
             Item.knockBack = 10;
             Item.mana = 10;
             Item.rare = 10;
-            Item.shoot = ModContent.ProjectileType<rifleBullet>();
+            Item.shoot = ModContent.ProjectileType<denierRifleBullet>();
             Item.shootSpeed = 40f;
         }
         public override bool PreDrawInWorld(SpriteBatch spriteBatch, Color lightColor, Color alphaColor, ref float rotation, ref float scale, int whoAmI) {
-            Texture2D texture = ModContent.Request<Texture2D>("Denier/mainContent/rifleOutline").Value;
+            Texture2D texture = ModContent.Request<Texture2D>("Denier/Content/Items/Denier/denierRifleOutline").Value;
 
             Rectangle frame = new Rectangle(0, 0, texture.Width, texture.Height);
             Vector2 frameOrigin = frame.Size() / 2f;
@@ -82,21 +81,20 @@ namespace Denier.mainContent {
                 return false;
 			} else if(Main.mouseRight && player.statMana < 15) {
                 return false;
-            } else if(Main.mouseRight && !squares.canShoot) {
+            } else if(Main.mouseRight && !sigilSquare.canShoot) {
                 return false;
             } else {
-                Item.useTime = 60;
-				Item.useAnimation = 60;
+                Item.useTime = 45;
+				Item.useAnimation = 45;
                 Item.mana = 15;
                 return true;
             }
 		}
         public override bool Shoot(Player player, EntitySource_ItemUse_WithAmmo source, Vector2 position, Vector2 velocity, int type, int damage, float knockback) {
-            if (player.altFunctionUse == 0 && Main.mouseRight && squares.canShoot) {
-                squares.canShoot = false;
-                squares.rotRes = true;
-                squares45deg.rotRes = true;
-
+            if (player.altFunctionUse == 0 && Main.mouseRight && sigilSquare.canShoot) {
+                sigilSquare.canShoot = false;
+                sigilSquare.rotRes = true;
+                sigilSquare45deg.rotRes = true;
 
                 SoundEngine.PlaySound(shotSound with {MaxInstances = 3});
 
@@ -126,7 +124,7 @@ namespace Denier.mainContent {
 
                 return true;
             }
-            else if (player.altFunctionUse == 0 && !Main.mouseRight && dashCount > 0 && player.statMana >= 10) {
+            else if (player.altFunctionUse == 0 && !Main.mouseRight && dashCount > 0) {
                 dashCount--;
                 
                 for (int i = 0; i < 50; i++) {
@@ -147,6 +145,9 @@ namespace Denier.mainContent {
         public override void HoldItem(Player player) {
             rd = rand.Next(-100, 100);
 
+            Main.SmartCursorWanted_Mouse = false;        
+            Main.SmartCursorWanted_GamePad = false;              
+
             if(dashCount > 6)
                 dashCount = 6;
             
@@ -157,63 +158,46 @@ namespace Denier.mainContent {
             if(player.manaFlower)
                 player.QuickMana();
 
-            if (player.HeldItem.ModItem is not rifle)
+            if (player.HeldItem.ModItem is not denierRifle)
                 return; 
 
-            if (Main.mouseRight && !player.HasBuff<coolDownBuff>()) {
-                // scope = true;
+            if (Main.mouseRight) {
                 player.AddBuff(ModContent.BuffType<scopingBuff>(), 1);
-                if (player.whoAmI == Main.myPlayer && player.ownedProjectileCounts[ModContent.ProjectileType<mainCircle>()] == 0) {
+                if (player.whoAmI == Main.myPlayer && player.ownedProjectileCounts[ModContent.ProjectileType<sigilCircle>()] == 0) {
                     Projectile.NewProjectile(
                         Projectile.GetSource_None(),
                         player.Center,
                         Vector2.Zero,
-                        ModContent.ProjectileType<mainCircle>(), 0, 0, player.whoAmI
+                        ModContent.ProjectileType<sigilCircle>(), 0, 0, player.whoAmI
                     );
                 }    
-                if (player.whoAmI == Main.myPlayer && player.ownedProjectileCounts[ModContent.ProjectileType<sigil>()] == 0) {
+                if (player.whoAmI == Main.myPlayer && player.ownedProjectileCounts[ModContent.ProjectileType<sigilCircleSmall>()] == 0) {
                     Projectile.NewProjectile(
                         Projectile.GetSource_None(),
                         player.Center,
                         Vector2.Zero,
-                        ModContent.ProjectileType<sigil>(), 0, 0, player.whoAmI
+                        ModContent.ProjectileType<sigilCircleSmall>(), 0, 0, player.whoAmI
                     );
                 } 
-                if (player.whoAmI == Main.myPlayer && player.ownedProjectileCounts[ModContent.ProjectileType<squares>()] == 0) {
+                if (player.whoAmI == Main.myPlayer && player.ownedProjectileCounts[ModContent.ProjectileType<sigilSquare>()] == 0) {
                     Projectile.NewProjectile(
                         Projectile.GetSource_None(),
                         player.Center,
                         Vector2.Zero,
-                        ModContent.ProjectileType<squares>(), 0, 0, player.whoAmI
+                        ModContent.ProjectileType<sigilSquare>(), 0, 0, player.whoAmI
                     );
                 } 
-                if (player.whoAmI == Main.myPlayer && player.ownedProjectileCounts[ModContent.ProjectileType<squares45deg>()] == 0) {
+                if (player.whoAmI == Main.myPlayer && player.ownedProjectileCounts[ModContent.ProjectileType<sigilSquare45deg>()] == 0) {
                     Projectile.NewProjectile(
                         Projectile.GetSource_None(),
                         player.Center,
                         Vector2.Zero,
-                        ModContent.ProjectileType<squares45deg>(), 0, 0, player.whoAmI
+                        ModContent.ProjectileType<sigilSquare45deg>(), 0, 0, player.whoAmI
                     );
-                } 
-                // if (player.whoAmI == Main.myPlayer && player.ownedProjectileCounts[ModContent.ProjectileType<squaresCursor>()] == 0) {
-                //     Projectile.NewProjectile(
-                //         Terraria.Entity.GetSource_None(),
-                //         player.Center,
-                //         Vector2.Zero,
-                //         ModContent.ProjectileType<squaresCursor>(), 0, 0, player.whoAmI
-                //     );
-                // } 
-                // if (player.whoAmI == Main.myPlayer && player.ownedProjectileCounts[ModContent.ProjectileType<squares45degCursor>()] == 0) {
-                //     Projectile.NewProjectile(
-                //         Projectile.GetSource_None(),
-                //         player.Center,
-                //         Vector2.Zero,
-                //         ModContent.ProjectileType<squares45degCursor>(), 0, 0, player.whoAmI
-                //     );
-                // }                   
+                }                
             }
-            else if(!Main.mouseRight && squares.canShoot) {
-                squares.canShoot = false;
+            else if(!Main.mouseRight && sigilSquare.canShoot) {
+                sigilSquare.canShoot = false;
             }
         }
         public override Vector2? HoldoutOffset() {
@@ -237,17 +221,14 @@ namespace Denier.mainContent {
 				.Register();
 		}
     }
-    public class playerStuff : ModPlayer {
+    public class playerStuff:ModPlayer {
         public override void ModifyScreenPosition() {
-            if (rifle.scope) {
-                Main.screenPosition = Main.MouseWorld - new Vector2(Main.screenWidth / 2f, Main.screenHeight / 2f) - (Main.MouseWorld - Main.LocalPlayer.Center)/2f;
-                rifle.scope = false;
-            }
+
         }
         public override void PreUpdate() {
-            rifle.outlineColor = Main.errorColor;
-            if (Main.LocalPlayer.HeldItem.ModItem is not rifle) {
-                rifle.dashCount = 0;
+            denierRifle.outlineColor = Main.errorColor;
+            if (Main.LocalPlayer.HeldItem.ModItem is not denierRifle) {
+                denierRifle.dashCount = 0;
             }
         }
     }

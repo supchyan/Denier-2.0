@@ -7,9 +7,10 @@ using Terraria.UI;
 using Terraria.GameContent;
 using Terraria.Localization;
 using System.Collections.Generic;
+using Denier.Content.Items.Denier;
 
-namespace Denier.mainContent.rifleUI {
-	internal class rUI : UIState {
+namespace Denier.Content.UI {
+	internal class drUI:UIState {
 		private UIText Counter;
 		private UIElement area;
 
@@ -32,26 +33,26 @@ namespace Denier.mainContent.rifleUI {
 			
 			if(!Main.LocalPlayer.dead) {
 
-				Counter.SetText(Language.GetTextValue("Mods.Denier.UI.counterText") + ": " + rifle.dashCount.ToString(), scaleValue, false);
+				Counter.SetText(Language.GetTextValue("Mods.Denier.UI.counterText") + ": " + denierRifle.dashCount.ToString(), scaleValue, false);
 
 				if(Main.LocalPlayer.statMana < 10) {
 					Counter.TextColor = Color.Gray;
 					return;
 				}
 
-				if (rifle.dashCount == 0)
+				if (denierRifle.dashCount == 0)
 					Counter.TextColor = new Color(255, 0, 0);
-				else if (rifle.dashCount == 1)
+				else if (denierRifle.dashCount == 1)
 					Counter.TextColor = new Color(253, 0, 56);
-				else if (rifle.dashCount == 2)
+				else if (denierRifle.dashCount == 2)
 					Counter.TextColor = new Color(238, 0, 93);
-				else if (rifle.dashCount == 3)
+				else if (denierRifle.dashCount == 3)
 					Counter.TextColor = new Color(208, 0, 128);
-				else if (rifle.dashCount == 4)
+				else if (denierRifle.dashCount == 4)
 					Counter.TextColor = new Color(163, 0, 158);
-				else if (rifle.dashCount == 5)
+				else if (denierRifle.dashCount == 5)
 					Counter.TextColor = new Color(120, 0, 168);
-				else if (rifle.dashCount == 6)
+				else if (denierRifle.dashCount == 6)
 					Counter.TextColor = new Color(93, 0, 180);
 			}				
 		}
@@ -63,30 +64,30 @@ namespace Denier.mainContent.rifleUI {
 			uiElement.Height.Set(height, 0f);
 		}
 		public override void Draw(SpriteBatch spriteBatch) {
-			if (Main.LocalPlayer.HeldItem.ModItem is rifle) {
+			if (Main.LocalPlayer.HeldItem.ModItem is denierRifle) {
 				base.Draw(spriteBatch);
 			}
 		}
 		
 	}
-	class rifleUISystem : ModSystem {
-		private UserInterface rifleUserInterface;
-		internal rUI rifleUI;
+	class denierRifleUISystem:ModSystem {
+		private UserInterface denierRifleUserInterface;
+		internal drUI denierRifleUI;
 		public void ShowMyUI() {
-			rifleUserInterface?.SetState(rifleUI);
+			denierRifleUserInterface?.SetState(denierRifleUI);
 		}
 		public void HideMyUI() {
-			rifleUserInterface?.SetState(null);
+			denierRifleUserInterface?.SetState(null);
 		}
 		public override void Load() {
 			if (!Main.dedServ) {
-				rifleUI = new();
-				rifleUserInterface = new();
-				rifleUserInterface.SetState(rifleUI);
+				denierRifleUI = new();
+				denierRifleUserInterface = new();
+				denierRifleUserInterface.SetState(denierRifleUI);
 			}
 		}
 		public override void UpdateUI(GameTime gameTime) {
-			rifleUserInterface?.Update(gameTime);
+			denierRifleUserInterface?.Update(gameTime);
 		}
 		public override void ModifyInterfaceLayers(List<GameInterfaceLayer> layers) {
 			int resourceBarIndex = layers.FindIndex(layer => layer.Name.Equals("Vanilla: Resource Bars"));
@@ -94,7 +95,7 @@ namespace Denier.mainContent.rifleUI {
 				layers.Insert(resourceBarIndex, new LegacyGameInterfaceLayer(
 					"Denier: DashCounter",
 					delegate {
-						rifleUserInterface.Draw(Main.spriteBatch, new GameTime());
+						denierRifleUserInterface.Draw(Main.spriteBatch, new GameTime());
 						return true;
 					},
 					InterfaceScaleType.UI)

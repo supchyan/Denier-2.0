@@ -1,7 +1,7 @@
 Mods: {
 	Denier: {
 		Items: {
-			rifle: {
+			denierRifle: {
 				DisplayName: Отрицатель T.D.S.R.
 				Tooltip:
 					'''
@@ -15,32 +15,23 @@ Mods: {
 					---
 					Лучшее магическое оружие, выкованное Божественным Кузнецом.
 					'''
-				// DamageInfo: Mods.Denier.Items.rifle.DamageInfo
+				DamageInfo: ъеь?
 			}
 		}
 
 		Projectiles: {
-			rifleBullet.DisplayName: Пуля отрицания
-			mainCircle.DisplayName: Запретная магия
-			squares45degCursor.DisplayName: Запретная магия
-			squares45deg.DisplayName: Запретная магия
-			squaresCursor.DisplayName: Запретная магия
-			squaresOutCursor.DisplayName: Запретная магия
-			squaresOut.DisplayName: Запретная магия
-			squares.DisplayName: Запретная магия
-			texts.DisplayName: Запретная магия
+			denierRifleBullet.DisplayName: Пуля отрицания
 			coolEffect.DisplayName: Запретная магия
 			coolEffectAlt.DisplayName: Запретная магия
 			shell.DisplayName: Гильза
-			sigil.DisplayName: Запретная магия
+			sigilCircle.DisplayName: Запретная магия
+			sigilCircleSmall.DisplayName: Запретная магия
+			sigilSquare.DisplayName: Запретная магия
+			sigilSquare45deg.DisplayName: Запретная магия
+			sigilSquareOut.DisplayName: Запретная магия
 		}
 
 		Buffs: {
-			coolDownBuff: {
-				DisplayName: Отрицатель на перезарядке
-				Description: Вы не можете прицеливаться сейчас
-			}
-
 			scopingBuff: {
 				DisplayName: В процессе прицеливания
 				Description: Вы прицеливаетесь прямо сейчас!

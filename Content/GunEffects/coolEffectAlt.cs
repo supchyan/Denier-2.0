@@ -6,8 +6,8 @@ using Terraria.DataStructures;
 using Terraria.ModLoader;
 using System.IO;
 
-namespace Denier.mainContent.gunEffects {
-    public class coolEffect : ModProjectile {
+namespace Denier.Content.GunEffects {
+    public class coolEffectAlt:ModProjectile {
         public int valueY;
         public override void SetStaticDefaults() {
             Main.projFrames[Projectile.type] = 2;
@@ -70,6 +70,7 @@ namespace Denier.mainContent.gunEffects {
                 );
                 projRot = player.itemRotation + MathHelper.ToRadians(180);
             }
+            
 
             Projectile.position = projPos;
             Projectile.velocity = projVel;

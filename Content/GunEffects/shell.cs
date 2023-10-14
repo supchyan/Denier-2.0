@@ -5,8 +5,8 @@ using Terraria.DataStructures;
 using Terraria.ModLoader;
 using System.IO;
 
-namespace Denier.mainContent.gunEffects {
-    public class shell : ModProjectile {
+namespace Denier.Content.GunEffects {
+    public class shell:ModProjectile {
         public int oldDir;
         public double offsetX;
         public double offsetY;
