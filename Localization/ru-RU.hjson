@@ -29,6 +29,7 @@ Mods: {
 			sigilSquare.DisplayName: Запретная магия
 			sigilSquare45deg.DisplayName: Запретная магия
 			sigilSquareOut.DisplayName: Запретная магия
+			// dashEffect.DisplayName: dash Effect
 		}
 
 		Buffs: {

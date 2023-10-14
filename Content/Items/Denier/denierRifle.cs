@@ -127,14 +127,13 @@ namespace Denier.Content.Items.Denier {
             else if (player.altFunctionUse == 0 && !Main.mouseRight && dashCount > 0) {
                 dashCount--;
                 
-                for (int i = 0; i < 50; i++) {
-                    Vector2 gigaVelocity = Main.rand.NextVector2Unit((player.Center - Main.MouseWorld).ToRotation() - MathHelper.Pi/8, (float)MathHelper.Pi / 4) * 20;
-                    Dust dashDust = Dust.NewDustPerfect(player.Center, DustID.PortalBolt, -gigaVelocity, 255, Color.White, 1f);
-                    dashDust.noGravity = true;
-                }
-
-                player.velocity = player.velocity.DirectionTo((player.Center - Main.MouseWorld))*20f;
-
+                Projectile.NewProjectile(
+                        Projectile.GetSource_None(), 
+                        player.Center, 
+                        Vector2.Zero,
+                        ModContent.ProjectileType<dashEffect>(), 0, 0, player.whoAmI
+                    );
+                player.velocity = player.velocity.DirectionTo(player.Center - Main.MouseWorld)*20f;
                 SoundEngine.PlaySound(bassSound with {MaxInstances = 3});
 
                 return false;

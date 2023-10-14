@@ -29,6 +29,7 @@ Mods: {
 			sigilSquare.DisplayName: Forbidden magic
 			sigilSquare45deg.DisplayName: Forbidden magic
 			sigilSquareOut.DisplayName: Forbidden magic
+			dashEffect.DisplayName: dash Effect
 		}
 
 		Buffs: {
