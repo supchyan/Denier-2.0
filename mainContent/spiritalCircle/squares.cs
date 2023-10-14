@@ -57,7 +57,6 @@ namespace Denier.mainContent.spiritalCircle {
                     squaresCursor.playItOneTime = true;
                 } else
                 if(canShoot && player.statMana >= 15 && playItOneTime) {
-                    Main.NewText(canShoot);
                     playItOneTime = false;
                     SoundEngine.PlaySound(noteSound with {Volume = 2f}, Main.MouseWorld);
                     Projectile.NewProjectile(
