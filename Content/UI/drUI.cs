@@ -32,28 +32,21 @@ namespace Denier.Content.UI {
 		public override void Update(GameTime gameTime) {
 			
 			if(!Main.LocalPlayer.dead) {
-
-				Counter.SetText(Language.GetTextValue("Mods.Denier.UI.counterText") + ": " + denierRifle.dashCount.ToString(), scaleValue, false);
-
+				Counter.TextColor = new Color(255/2,255/2,255/2);
 				if(Main.LocalPlayer.statMana < 10) {
-					Counter.TextColor = Color.Gray;
-					return;
+					Counter.SetText(
+						Language.GetTextValue("Mods.Denier.UI.counterText") + 
+						": " + denierRifle.dashCount.ToString() + 
+						" (" + Language.GetTextValue("Mods.Denier.UI.counterManaStatus")+")", 
+						scaleValue, false
+					);
+				} else  {
+					Counter.SetText(
+						Language.GetTextValue("Mods.Denier.UI.counterText") + 
+						": " + denierRifle.dashCount.ToString(), 
+						scaleValue, false
+					);
 				}
-
-				if (denierRifle.dashCount == 0)
-					Counter.TextColor = new Color(255, 0, 0);
-				else if (denierRifle.dashCount == 1)
-					Counter.TextColor = new Color(253, 0, 56);
-				else if (denierRifle.dashCount == 2)
-					Counter.TextColor = new Color(238, 0, 93);
-				else if (denierRifle.dashCount == 3)
-					Counter.TextColor = new Color(208, 0, 128);
-				else if (denierRifle.dashCount == 4)
-					Counter.TextColor = new Color(163, 0, 158);
-				else if (denierRifle.dashCount == 5)
-					Counter.TextColor = new Color(120, 0, 168);
-				else if (denierRifle.dashCount == 6)
-					Counter.TextColor = new Color(93, 0, 180);
 			}				
 		}
 

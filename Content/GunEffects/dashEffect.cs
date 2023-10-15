@@ -24,11 +24,17 @@ namespace Denier.Content.GunEffects {
             Projectile.netUpdate = true;
             Projectile.timeLeft = 2;
             Projectile.ai[0]++;
-            if (Projectile.ai[0] >= 30) Projectile.Kill();
-
             Player player = Main.player[Projectile.owner];
-            Dust dust =  Dust.NewDustDirect(player.Center, player.width, player.height, DustID.LavaMoss,-player.velocity.X,-player.velocity.Y,1,Color.Red, 3f);
-            dust.noGravity = true;
+
+            Dust dust =  Dust.NewDustDirect(player.Center, player.width/2, player.height/2, DustID.LavaMoss,0,0,1,Color.Red, 2f);
+            dust.noGravity = true;      
+
+            if(Projectile.ai[0] <= 30) {
+                player.fullRotation=MathHelper.ToRadians(-Projectile.ai[0]*12*player.direction);
+            } else if (Projectile.ai[0] > 30) {
+                player.fullRotation = 0;
+                Projectile.Kill();
+            }; 
         }
     }
 }

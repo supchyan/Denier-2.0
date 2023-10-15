@@ -77,11 +77,14 @@ namespace Denier.Content.Items.Denier {
 				Item.useAnimation = 20;
                 Item.mana = 10;
                 return true;
-			} else if (!Main.mouseRight && (player.statMana < 10 || dashCount == 0)) {
+			} else
+            if (!Main.mouseRight && (player.statMana < 10 || dashCount == 0)) {
                 return false;
-			} else if(Main.mouseRight && player.statMana < 15) {
+			} else
+            if(Main.mouseRight && player.statMana < 15) {
                 return false;
-            } else if(Main.mouseRight && !sigilSquare.canShoot) {
+            } else
+            if(Main.mouseRight && !sigilSquare.canShoot) {
                 return false;
             } else {
                 Item.useTime = 45;
@@ -160,7 +163,7 @@ namespace Denier.Content.Items.Denier {
             if (player.HeldItem.ModItem is not denierRifle)
                 return; 
 
-            if (Main.mouseRight) {
+            if (Main.mouseRight && player.statMana >=15) {
                 player.AddBuff(ModContent.BuffType<scopingBuff>(), 1);
                 if (player.whoAmI == Main.myPlayer && player.ownedProjectileCounts[ModContent.ProjectileType<sigilCircle>()] == 0) {
                     Projectile.NewProjectile(

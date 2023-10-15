@@ -39,6 +39,9 @@ Mods: {
 			}
 		}
 
-		UI.counterText: Dashes amount
+		UI: {
+			counterText: Dashes amount
+			counterManaStatus: No mana
+		}
 	}
 }

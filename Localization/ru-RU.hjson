@@ -39,6 +39,9 @@ Mods: {
 			}
 		}
 
-		UI.counterText: Кол-во рывков
+		UI: {
+			counterText: Кол-во рывков
+			counterManaStatus: Нет маны
+		}
 	}
 }

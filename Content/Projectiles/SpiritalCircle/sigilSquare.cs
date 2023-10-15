@@ -44,7 +44,7 @@ namespace Denier.Content.Projectiles.SpiritalCircle {
             
             Player player = Main.player[Projectile.owner];
 
-            if(Projectile.ai[1] >= 45) {                
+            if(Projectile.ai[1] >= 45 && player.statMana>=15) {                
                 oldRot = Projectile.rotation;
 
                 red = 255;
@@ -63,8 +63,7 @@ namespace Denier.Content.Projectiles.SpiritalCircle {
                         Projectile.velocity, ModContent.ProjectileType<sigilSquareOut>(), 0, 0, player.whoAmI
                     );
                 } 
-            }
-            else {
+            } else {
                 red = 255;
                 green = 255;
                 blue = 255;
@@ -81,16 +80,26 @@ namespace Denier.Content.Projectiles.SpiritalCircle {
 
             projPos = player.Center - new Vector2(Projectile.width / 2f, Projectile.height / 2f);
 
+            int dieTime = 10;
             if(!player.HasBuff<scopingBuff>() || player.dead) {
-                Projectile.ai[2]+=0.1f;
-                Projectile.Opacity -= 2*Projectile.ai[2];
-                Projectile.scale += Projectile.ai[2];
+                Projectile.ai[2]+=0.9f;
+                double lerpValue = Projectile.ai[2]/dieTime;
+
+                if (Projectile.ai[2] <= dieTime) {
+                    Projectile.scale = 1f + 0.2f*(float)lerpValue;
+                    Projectile.Opacity = 1f - 1f*(float)lerpValue;
+                }
             }
             else {
+                Projectile.ai[2]=0;
                 Projectile.ai[0]++;
                 if(Projectile.ai[0]<=45f) {
                     Projectile.scale = 1f - 1f/(float)Math.Pow(e,Projectile.ai[0]/4f);
                 }
+                else {
+                    Projectile.scale = 1f;
+                }
+                Projectile.Opacity = 1f;
             }
             
             Projectile.position = projPos;
@@ -99,7 +108,7 @@ namespace Denier.Content.Projectiles.SpiritalCircle {
                 Projectile.Kill();
         }
         public override Color? GetAlpha(Color lightColor) {
-            return new Color(red,green,blue,255);
+            return new Color(red,green,blue,255)*Projectile.Opacity;
 		}
         public override void SendExtraAI(BinaryWriter writer) {
 			writer.WriteVector2(projPos);
