@@ -47,7 +47,10 @@ namespace Denier.Content.UI {
 						scaleValue, false
 					);
 				}
-			}				
+			}
+			else {
+				Counter.TextColor = new Color(0,0,0,0);
+			}		
 		}
 
 		private void SetRectangle(UIElement uiElement, float left, float top, float width, float height) {

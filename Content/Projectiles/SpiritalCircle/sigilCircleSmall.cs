@@ -33,6 +33,8 @@ namespace Denier.Content.Projectiles.SpiritalCircle {
             Projectile.netUpdate = true;
             Projectile.timeLeft = 2;
             Projectile.ai[1]++;
+
+            Lighting.AddLight(Projectile.Center, red/255*Projectile.Opacity, green/255, blue/255);
             
             Player player = Main.player[Projectile.owner];
 

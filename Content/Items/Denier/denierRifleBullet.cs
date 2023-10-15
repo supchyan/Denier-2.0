@@ -36,7 +36,6 @@ namespace Denier.Content.Items.Denier {
             oldPlayerVelocity = Main.LocalPlayer.velocity;
         }
         public override void AI() {
-
             if (Main.myPlayer == Projectile.owner)
                 Projectile.netUpdate = true;
 
@@ -68,26 +67,19 @@ namespace Denier.Content.Items.Denier {
             shotTrail.noGravity = true;
 
             while (Projectile.ai[0] <= 3) {
-
                 Lighting.AddLight(Projectile.Center, 255f / 255f, 209f / 255f, 178f / 255f);
                 break;
-
             }
-
         }
         public override void OnKill(int timeLeft) {
-
             for (int i = 0; i < 50; i++) {
-                    Vector2 gigaVelocity = Main.rand.NextVector2CircularEdge(Projectile.width / 10f, Projectile.height / 10f);
-                    Dust dashDust = Dust.NewDustPerfect(Projectile.Center, DustID.PortalBolt, -gigaVelocity, 255, new Color(255f, 209f, 178f), 1f);
-                    dashDust.noGravity = true;
-                }
-
+                Vector2 gigaVelocity = Main.rand.NextVector2CircularEdge(Projectile.width / 10f, Projectile.height / 10f);
+                Dust dashDust = Dust.NewDustPerfect(Projectile.Center, DustID.PortalBolt, -gigaVelocity, 255, new Color(255f, 209f, 178f), 1f);
+                dashDust.noGravity = true;
+            }
         }
         public override Color? GetAlpha(Color lightColor) {
-
 			return new Color(255f, 209f, 178f) * Projectile.Opacity;
-		
         }
     }
 }

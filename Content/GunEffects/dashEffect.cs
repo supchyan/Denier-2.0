@@ -24,7 +24,16 @@ namespace Denier.Content.GunEffects {
             Projectile.netUpdate = true;
             Projectile.timeLeft = 2;
             Projectile.ai[0]++;
+
             Player player = Main.player[Projectile.owner];
+
+            if(Projectile.ai[0] <= 10) {
+                Lighting.AddLight(player.Center, 0.4f*(Projectile.ai[0]/10), 0f, 0f);
+            }
+            else if (Projectile.ai[0] >= 20) {
+                Lighting.AddLight(player.Center, 0.4f*1.5f - 0.4f*(Projectile.ai[0]/20), 0f, 0f);
+            }
+            
 
             Dust dust =  Dust.NewDustDirect(player.Center, player.width/2, player.height/2, DustID.LavaMoss,0,0,1,Color.Red, 2f);
             dust.noGravity = true;      

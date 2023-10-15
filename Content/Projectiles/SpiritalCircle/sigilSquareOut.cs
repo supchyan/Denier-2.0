@@ -34,6 +34,8 @@ namespace Denier.Content.Projectiles.SpiritalCircle {
             Projectile.ai[1]++;
             Projectile.timeLeft = 2;
 
+            Lighting.AddLight(Projectile.Center, 0.4f*Projectile.Opacity, 0f, 0f);
+
             Player player = Main.player[Projectile.owner];
 
             projPos = player.Center - new Vector2(Projectile.width / 2f, Projectile.height / 2f);
