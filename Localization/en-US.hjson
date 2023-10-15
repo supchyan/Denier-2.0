@@ -29,7 +29,7 @@ Mods: {
 			sigilSquare.DisplayName: Forbidden magic
 			sigilSquare45deg.DisplayName: Forbidden magic
 			sigilSquareOut.DisplayName: Forbidden magic
-			dashEffect.DisplayName: dash Effect
+			dashEffect.DisplayName: Forbidden magic
 		}
 
 		Buffs: {
@@ -37,11 +37,6 @@ Mods: {
 				DisplayName: Scoping Process
 				Description: You're scoping right now!
 			}
-		}
-
-		UI: {
-			counterText: Dashes amount
-			counterManaStatus: No mana
 		}
 	}
 }

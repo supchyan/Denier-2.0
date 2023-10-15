@@ -21,6 +21,7 @@ namespace Denier.Content.Items.Denier {
             Projectile.netImportant = true;
             Projectile.netUpdate = true;
         }
+        SoundStyle shotSound = new SoundStyle("Denier/Sounds/shot");
         private float bulletDamage;
         private float bulletCrit;
         private Vector2 oldPlayerCenter;
@@ -34,6 +35,8 @@ namespace Denier.Content.Items.Denier {
 
             oldPlayerCenter = Projectile.Center;
             oldPlayerVelocity = Main.LocalPlayer.velocity;
+
+            SoundEngine.PlaySound(shotSound with {MaxInstances = 3});
         }
         public override void AI() {
             if (Main.myPlayer == Projectile.owner)

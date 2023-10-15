@@ -11,9 +11,6 @@ using Denier.Content.Items.Denier;
 
 namespace Denier.Content.Projectiles.SpiritalCircle {
     public class sigilSquare : ModProjectile {
-        SoundStyle tickSound = new SoundStyle("Denier/Sounds/tick");
-        SoundStyle noteSound = new SoundStyle("Denier/Sounds/note");
-
         public override void SetDefaults() {
             Projectile.width = 128;
             Projectile.height = 128;
@@ -59,11 +56,12 @@ namespace Denier.Content.Projectiles.SpiritalCircle {
                 } else
                 if(canShoot && player.statMana >= 15 && playItOneTime) {
                     playItOneTime = false;
-                    SoundEngine.PlaySound(noteSound with {Volume = 2f}, Main.MouseWorld);
-                    Projectile.NewProjectile(
-                        Projectile.GetSource_FromThis(), Projectile.Center,
-                        Projectile.velocity, ModContent.ProjectileType<sigilSquareOut>(), 0, 0, player.whoAmI
-                    );
+                    if (player.whoAmI == Main.myPlayer && player.ownedProjectileCounts[ModContent.ProjectileType<sigilSquareOut>()] == 0) {
+                        Projectile.NewProjectile(
+                            Projectile.GetSource_None(), player.Center,
+                            Vector2.Zero, ModContent.ProjectileType<sigilSquareOut>(), 0, 0, player.whoAmI
+                        );
+                    }
                 } 
             } else {
                 red = 255;

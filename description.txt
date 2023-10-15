@@ -1,14 +1,11 @@
-- Best movement singleplayer rifle.
+Who said "best movement rifle"?
 
-- How to obtain: Craftable in hardmode.
+Obtaining: Craftable in hardmode.
 
-- Why TerrariaOverhaul is needed? Because I like it's physics rework. Compares great together.
+Why TerrariaOverhaul is needed? Because I like it's physics rework. Compares great together.
 
-- Cheers <3
-
-- Craft (Hardmode Anvil):
-    Handgun;
-    Titanium Bar (Adamantite Bar) x75;
-    Wire x75;
-    Greater Mana Potion x25.
----
+Craft (Hardmode Anvil):
+[c/ff0000:{☩}] Handgun;
+[c/ff0000:{☩}] Titanium Bar (Adamantite Bar) x75;
+[c/ff0000:{☩}] Wire x75;
+[c/ff0000:{☩}] Greater Mana Potion x25.

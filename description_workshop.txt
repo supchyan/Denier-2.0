@@ -1,0 +1,8 @@
+[h3]Feeling bored of clasic sniper rifles in Terraria? Try this one![/h3]
+[hr][/hr] 
+
+This mod adds new rifle that has unique mechanics. It's damage scales by your movement speed and shooting range.
+Cool visuals and multiplayer support! ^^
+[hr][/hr] 
+
+[i]If you'll find any issues, feel free to notify me whatever.[/i]

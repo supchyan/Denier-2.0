@@ -21,8 +21,6 @@ namespace Denier.Content.Items.Denier {
     public class denierRifle : ModItem {
         
         public override string Texture => "Denier/Content/Items/Denier/denierRifleNoOutline";
-        SoundStyle shotSound = new SoundStyle("Denier/Sounds/shot");
-        SoundStyle bassSound = new SoundStyle("Denier/Sounds/bass");
         public static int dashCount;
         private float dashTimer;
         public static bool scope;
@@ -99,8 +97,6 @@ namespace Denier.Content.Items.Denier {
                 sigilSquare.rotRes = true;
                 sigilSquare45deg.rotRes = true;
 
-                SoundEngine.PlaySound(shotSound with {MaxInstances = 3});
-
                 if(rd > 0) {
                     Projectile.NewProjectile(
                         Projectile.GetSource_None(), 
@@ -137,14 +133,14 @@ namespace Denier.Content.Items.Denier {
                         ModContent.ProjectileType<dashEffect>(), 0, 0, player.whoAmI
                     );
                 player.velocity = player.velocity.DirectionTo(player.Center - Main.MouseWorld)*20f;
-                SoundEngine.PlaySound(bassSound with {MaxInstances = 3});
 
                 return false;
-
             }
             else return false;
         }
         public override void HoldItem(Player player) {
+            player.scope = true;
+
             rd = rand.Next(-100, 100);
 
             Main.SmartCursorWanted_Mouse = false;        

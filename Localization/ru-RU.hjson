@@ -29,7 +29,7 @@ Mods: {
 			sigilSquare.DisplayName: Запретная магия
 			sigilSquare45deg.DisplayName: Запретная магия
 			sigilSquareOut.DisplayName: Запретная магия
-			// dashEffect.DisplayName: dash Effect
+			dashEffect.DisplayName: Запретная магия
 		}
 
 		Buffs: {
@@ -37,11 +37,6 @@ Mods: {
 				DisplayName: В процессе прицеливания
 				Description: Вы прицеливаетесь прямо сейчас!
 			}
-		}
-
-		UI: {
-			counterText: Кол-во рывков
-			counterManaStatus: Нет маны
 		}
 	}
 }

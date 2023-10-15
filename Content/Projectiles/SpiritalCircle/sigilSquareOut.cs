@@ -4,12 +4,14 @@ using Microsoft.Xna.Framework.Graphics;
 using Terraria;
 using Terraria.DataStructures;
 using Terraria.ModLoader;
+using Terraria.Audio;
 using System.IO;
 using Denier.Content.Items.Denier;
 
 namespace Denier.Content.Projectiles.SpiritalCircle {
     public class sigilSquareOut : ModProjectile {
         private int lifeTime = 10;
+        SoundStyle noteSound = new SoundStyle("Denier/Sounds/note");
         public override void SetDefaults() {
             Projectile.width = 128;
             Projectile.height = 128;
@@ -27,6 +29,8 @@ namespace Denier.Content.Projectiles.SpiritalCircle {
 
             projPos = player.Center - new Vector2(Projectile.width / 2f, Projectile.height / 2f);
             Projectile.rotation = MathHelper.ToRadians(45);
+
+            SoundEngine.PlaySound(noteSound with {Volume = 2f}, Main.MouseWorld);
         }
         public override void AI() {
             Projectile.netImportant = true;

@@ -8,49 +8,54 @@ using Terraria.GameContent;
 using Terraria.Localization;
 using System.Collections.Generic;
 using Denier.Content.Items.Denier;
+using System;
 
 namespace Denier.Content.UI {
 	internal class drUI:UIState {
 		private UIText Counter;
-		private UIElement area;
-
+		private UIText Length;
+		private UIElement Area;
 		public override void OnInitialize() {
-			area = new UIElement();
-			SetRectangle(area, 0f, 0f, 0f, 0f);
-			area.HAlign = 0.5f;
-			area.VAlign = 0.1f;
+			Area = new UIElement();
+			SetRectangle(Area, 0f, 0f, 0f, 0f);
+
+			Length = new UIText(" ", 0.8f);
+			SetRectangle(Length,0f,0f,0f,0f);
 
             Counter = new UIText(" ", 1.1f);
-			Counter.HAlign = 0.5f;
-
 			SetRectangle(Counter,0f,0f,0f,0f);
 
-			area.Append(Counter);
-			Append(area);
+			Area.Append(Length);
+			Area.Append(Counter);
+			Append(Area);
 		}
 		static float scaleValue = 1.1f;
 		public override void Update(GameTime gameTime) {
+			SetRectangle(
+				Length,
+				-8f + Main.MouseScreen.X + (Main.LocalPlayer.Center.ToScreenPosition()-Main.MouseScreen).X/2f,
+				-8f + Main.MouseScreen.Y + (Main.LocalPlayer.Center.ToScreenPosition()-Main.MouseScreen).Y/2f,
+				32f,32f
+			);
+			SetRectangle(
+				Counter,
+				-8f + Main.MouseScreen.X + (Main.LocalPlayer.Center.ToScreenPosition()-Main.MouseScreen).X,
+				-8f + Main.MouseScreen.Y + (Main.LocalPlayer.Center.ToScreenPosition()-Main.MouseScreen).Y - 80f,
+				32f,32f
+			);
 			
 			if(!Main.LocalPlayer.dead) {
-				Counter.TextColor = new Color(255/2,255/2,255/2);
-				if(Main.LocalPlayer.statMana < 10) {
-					Counter.SetText(
-						Language.GetTextValue("Mods.Denier.UI.counterText") + 
-						": " + denierRifle.dashCount.ToString() + 
-						" (" + Language.GetTextValue("Mods.Denier.UI.counterManaStatus")+")", 
-						scaleValue, false
-					);
-				} else  {
-					Counter.SetText(
-						Language.GetTextValue("Mods.Denier.UI.counterText") + 
-						": " + denierRifle.dashCount.ToString(), 
-						scaleValue, false
-					);
-				}
+				if(Main.LocalPlayer.statMana >= 10) Counter.TextColor = new Color(255f,0f,0f);
+				else Counter.TextColor = new Color(255f/2f,255f/2f,255f/2f);
+
+				Length.TextColor = new Color((float)Math.Round(Main.LocalPlayer.velocity.Length())/20f,0f,0f);
 			}
 			else {
 				Counter.TextColor = new Color(0,0,0,0);
-			}		
+				Length.TextColor = new Color(0,0,0,0);
+			}	
+			Length.SetText(Math.Round(Main.LocalPlayer.velocity.Length()).ToString(), scaleValue, false);	
+			Counter.SetText(denierRifle.dashCount.ToString(), scaleValue, false);	
 		}
 
 		private void SetRectangle(UIElement uiElement, float left, float top, float width, float height) {

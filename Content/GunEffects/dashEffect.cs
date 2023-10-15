@@ -5,10 +5,12 @@ using Terraria.DataStructures;
 using Terraria.ModLoader;
 using Terraria.ID;
 using System.IO;
+using Terraria.Audio;
 
 namespace Denier.Content.GunEffects {
     public class dashEffect:ModProjectile {
         public override string Texture => "Denier/Content/Global-Textures/blankPixel";
+        SoundStyle bassSound = new SoundStyle("Denier/Sounds/bass");
 
         public override void SetDefaults() {
             Projectile.width = 1;
@@ -18,6 +20,10 @@ namespace Denier.Content.GunEffects {
             Projectile.tileCollide = false;
             Projectile.Opacity = 0.01f;
             Projectile.ignoreWater = true;
+        }
+        public override void OnSpawn(IEntitySource source) {
+            Player player = Main.player[Projectile.owner];
+            SoundEngine.PlaySound(bassSound with {MaxInstances = 3});
         }
         public override void AI() {
             Projectile.netImportant = true;
@@ -39,7 +45,7 @@ namespace Denier.Content.GunEffects {
             dust.noGravity = true;      
 
             if(Projectile.ai[0] <= 30) {
-                player.fullRotation=MathHelper.ToRadians(-Projectile.ai[0]*12*player.direction);
+                player.fullRotation=MathHelper.ToRadians(-Projectile.ai[0]*24*player.direction);
             } else if (Projectile.ai[0] > 30) {
                 player.fullRotation = 0;
                 Projectile.Kill();
