@@ -4,3 +4,10 @@ It's damage scales by your movement speed and shooting range.
 Cool visuals and multiplayer support! ^^[/hr] 
 
 [b][i]If you'll find any issues, feel free to notify me whatever.[/i][/b]
+[code]
+Craft: 
+- Handgun;
+- Titanium / Adamantite Bar x75;
+- Wire x75;
+- Greater Mana Potion x25.
+[/code]

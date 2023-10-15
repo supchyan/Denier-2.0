@@ -20,8 +20,6 @@ namespace Denier.Content.GunEffects {
             Projectile.tileCollide = false;
             Projectile.Opacity = 1f;
             Projectile.ignoreWater = true;
-            Projectile.netImportant = true;
-            Projectile.netUpdate = true;
         }
         public Vector2 projPos;
         public Vector2 projVel;
@@ -51,6 +49,9 @@ namespace Denier.Content.GunEffects {
             Lighting.AddLight(Projectile.Center, 25.5f, 8f, 0f);
         }
         public override void AI() {
+            Projectile.netImportant = true;
+            Projectile.netUpdate = true;
+
             Player player = Main.player[Projectile.owner];
 
             Projectile.ai[0]++;

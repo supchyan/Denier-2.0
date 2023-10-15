@@ -20,9 +20,6 @@ namespace Denier.Content.GunEffects {
             Projectile.tileCollide = false;
             Projectile.Opacity = 1f;
             Projectile.ignoreWater = true;
-
-            Projectile.netImportant = true;
-            Projectile.netUpdate = true;
         }
         public override void OnSpawn(IEntitySource source) {
             offsetX = rnd.Next(-5, 2);
@@ -36,6 +33,9 @@ namespace Denier.Content.GunEffects {
             Projectile.position = player.Center + new Vector2(50f * player.direction, 0f);
         }
         public override void AI() {
+            Projectile.netImportant = true;
+            Projectile.netUpdate = true;
+            
             Projectile.ai[0]++;
 
             Projectile.velocity = new Vector2(0f, -5f + (float)offsetY) + new Vector2(-2f + (float)offsetX, 0f) * oldDir + new Vector2(0, 20f * Projectile.ai[0] / 60f);

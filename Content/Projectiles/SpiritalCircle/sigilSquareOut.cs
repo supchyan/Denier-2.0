@@ -24,13 +24,11 @@ namespace Denier.Content.Projectiles.SpiritalCircle {
             Projectile.ignoreWater = true;
         }
         public Vector2 projPos;
+        private bool playSound;
         public override void OnSpawn(IEntitySource source) {
             Player player = Main.player[Projectile.owner];
 
             projPos = player.Center - new Vector2(Projectile.width / 2f, Projectile.height / 2f);
-            Projectile.rotation = MathHelper.ToRadians(45);
-
-            SoundEngine.PlaySound(noteSound with {Volume = 2f}, Main.MouseWorld);
         }
         public override void AI() {
             Projectile.netImportant = true;
@@ -42,11 +40,16 @@ namespace Denier.Content.Projectiles.SpiritalCircle {
 
             Player player = Main.player[Projectile.owner];
 
+            if(!playSound) {
+                SoundEngine.PlaySound(noteSound with {MaxInstances = 3}, player.Center);
+                playSound = true;
+            }
+
             projPos = player.Center - new Vector2(Projectile.width / 2f, Projectile.height / 2f);
 
             double lerpValue = Projectile.ai[1]/lifeTime;
 
-            if (Projectile.ai[2] <= lifeTime) {
+            if (Projectile.ai[1] <= lifeTime) {
                     Projectile.scale = 1f + 1f*(float)lerpValue;
                     Projectile.Opacity = 1f - 1f*(float)lerpValue;
                 }
@@ -54,6 +57,7 @@ namespace Denier.Content.Projectiles.SpiritalCircle {
                 Projectile.Kill();
             }
             Projectile.position = projPos;
+            Projectile.rotation = MathHelper.ToRadians(45);
         }
         public override Color? GetAlpha(Color lightColor) {
             return new Color(255, 0, 0, 255)*Projectile.Opacity;

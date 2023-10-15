@@ -47,22 +47,29 @@ namespace Denier.Content.Items.Denier {
         }
         public override bool PreDrawInWorld(SpriteBatch spriteBatch, Color lightColor, Color alphaColor, ref float rotation, ref float scale, int whoAmI) {
             Texture2D texture = ModContent.Request<Texture2D>("Denier/Content/Items/Denier/denierRifleOutline").Value;
-
             Rectangle frame = new Rectangle(0, 0, texture.Width, texture.Height);
             Vector2 frameOrigin = frame.Size() / 2f;
-
             Vector2 offset = new Vector2(Item.width / 2 - frameOrigin.X, Item.height - frame.Height);
             Vector2 drawPos = Item.position - Main.screenPosition + frameOrigin + offset + new Vector2(0, -10f);
-
             spriteBatch.Draw(texture, drawPos, frame, outlineColor, rotation, frameOrigin, scale * 2f, SpriteEffects.None, 0);
-
             return false;
         }
+        public override bool PreDrawInInventory(SpriteBatch spriteBatch, Vector2 position, Rectangle frame, Color drawColor, Color itemColor, Vector2 origin, float scale) {
+			Texture2D texture = ModContent.Request<Texture2D>("Denier/Content/Items/Denier/denierRifleOutline").Value;
+			Rectangle sourceRectangle = new Rectangle(0, 0, texture.Width, texture.Height);
+			Vector2 origin1 = sourceRectangle.Size() / 2f;
+			spriteBatch.Draw(texture, position, sourceRectangle, outlineColor, MathHelper.ToRadians(-45), origin1, 1.4f*scale, SpriteEffects.None, 0f);
+			return false;
+		}
         public override void ModifyTooltips(List<TooltipLine> tooltips) {  
             foreach (TooltipLine line in tooltips) {
 				if (line.Mod == "Terraria" && line.Name == "Damage") {
 					line.OverrideColor = Main.errorColor;
-                    line.Text = "0 -> ∞";
+                    line.Text = Language.GetTextValue("Mods.Denier.BetterTooltips.DenierDamage");
+				}
+                if (line.Mod == "Terraria" && line.Name == "UseMana") {
+					line.OverrideColor = Main.errorColor;
+                    line.Text = Language.GetTextValue("Mods.Denier.BetterTooltips.DenierMana");
 				}
 			}
         }
@@ -153,7 +160,7 @@ namespace Denier.Content.Items.Denier {
             if(dashTimer % 120 == 0 && dashCount < 6)
                 dashCount++;
 
-            if(player.manaFlower)
+            if(player.manaFlower && player.statMana <= 15)
                 player.QuickMana();
 
             if (player.HeldItem.ModItem is not denierRifle)
@@ -204,17 +211,11 @@ namespace Denier.Content.Items.Denier {
         public override void AddRecipes() {
             CreateRecipe()
                 .AddIngredient(ItemID.Handgun)
-                .AddIngredient(ItemID.TitaniumBar, 75)
-                .AddIngredient(ItemID.Wire, 75)
-				.AddIngredient(ItemID.GreaterManaPotion, 25)
-				.AddTile(TileID.MythrilAnvil)
-				.Register();
-
-            CreateRecipe()
-                .AddIngredient(ItemID.Handgun)
-                .AddIngredient(ItemID.AdamantiteBar, 75)
-                .AddIngredient(ItemID.Wire, 75)
-				.AddIngredient(ItemID.GreaterManaPotion, 25)
+                .AddIngredient(ItemID.EyePatch, 1)
+                .AddIngredient(ItemID.SoulofNight, 40)
+                .AddIngredient(ItemID.SoulofLight, 40)
+                .AddRecipeGroup(Lang.GetItemNameValue(ItemID.TitaniumBar), 25)
+                .AddIngredient(ItemID.HellstoneBar, 25)
 				.AddTile(TileID.MythrilAnvil)
 				.Register();
 		}
@@ -228,6 +229,12 @@ namespace Denier.Content.Items.Denier {
             if (Main.LocalPlayer.HeldItem.ModItem is not denierRifle) {
                 denierRifle.dashCount = 0;
             }
+        }
+    }
+    public class RecipeTools:ModSystem {
+        public override void AddRecipeGroups() {
+            RecipeGroup HardModeMetals = new RecipeGroup(() => $"{Lang.GetItemNameValue(ItemID.TitaniumBar)} ({Lang.GetItemNameValue(ItemID.AdamantiteBar)})", ItemID.TitaniumBar, ItemID.AdamantiteBar);
+            RecipeGroup.RegisterGroup(Lang.GetItemNameValue(ItemID.TitaniumBar), HardModeMetals);
         }
     }
 }

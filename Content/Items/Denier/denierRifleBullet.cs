@@ -17,43 +17,43 @@ namespace Denier.Content.Items.Denier {
             Projectile.hostile = false;
             Projectile.ignoreWater = true;
             Projectile.tileCollide = false;
-            Projectile.penetrate = -1;
-            Projectile.netImportant = true;
-            Projectile.netUpdate = true;
+            Projectile.penetrate = 3;
         }
-        SoundStyle shotSound = new SoundStyle("Denier/Sounds/shot");
+        public SoundStyle shotSound = new SoundStyle("Denier/Sounds/shot");
         private float bulletDamage;
         private float bulletCrit;
         private Vector2 oldPlayerCenter;
-        private Vector2 oldPlayerVelocity;
+        private float oldPlayerVelocity;
         private float oldDamage;
         private float oldCrit;
-        private Vector2 distance;
+        private float distance;
+        private bool playSound;
         public override void OnSpawn(IEntitySource source) {
             oldDamage = Projectile.damage;
             oldCrit = Projectile.CritChance;
 
-            oldPlayerCenter = Projectile.Center;
-            oldPlayerVelocity = Main.LocalPlayer.velocity;
+            Player player = Main.player[Projectile.owner];
 
-            SoundEngine.PlaySound(shotSound with {MaxInstances = 3});
+            oldPlayerCenter = player.Center;
+            oldPlayerVelocity = (float)Math.Round(player.velocity.Length());
         }
         public override void AI() {
-            if (Main.myPlayer == Projectile.owner)
-                Projectile.netUpdate = true;
+            Projectile.netImportant = true;
+            Projectile.netUpdate = true;
 
             Player player = Main.player[Projectile.owner];
 
-            distance = Projectile.Center - oldPlayerCenter;
+            if(!playSound) {
+                SoundEngine.PlaySound(shotSound with {MaxInstances = 3}, player.Center);
+                playSound = true;
+            }
 
-            bulletDamage = oldDamage * (
-                                ((Math.Abs(distance.X) + Math.Abs(distance.Y)) / 50f) +
-                                Math.Abs(oldPlayerVelocity.X) + Math.Abs(oldPlayerVelocity.Y)
-                            ) / 10f;
-            bulletCrit = oldCrit + (
-                                ((Math.Abs(distance.X) + Math.Abs(distance.Y)) / 50f) +
-                                Math.Abs(oldPlayerVelocity.X) + Math.Abs(oldPlayerVelocity.Y)
-                            ) / 4f;
+            // showStats();
+
+            distance = (float)Math.Round(Projectile.Center.Distance(oldPlayerCenter)/16);
+
+            bulletDamage = oldDamage * (distance/2f+oldPlayerVelocity)/30f;
+            bulletCrit = oldCrit + (distance+oldPlayerVelocity)/8f;
 
             Projectile.damage = (int)bulletDamage;
             Projectile.CritChance = (int)bulletCrit;
@@ -83,6 +83,18 @@ namespace Denier.Content.Items.Denier {
         }
         public override Color? GetAlpha(Color lightColor) {
 			return new Color(255f, 209f, 178f) * Projectile.Opacity;
+        }
+        public void showStats() {
+            Main.NewText("-----");
+            Main.NewText("gun dist: " + distance);
+            Main.NewText("player vel: " + oldPlayerVelocity);
+            Main.NewText("-----");
+            Main.NewText("dmg mul: "+(distance/2f+oldPlayerVelocity)/30f);
+            Main.NewText("fin dmg: "+(int)bulletDamage);
+            Main.NewText("-----");
+            Main.NewText("crit bonus: "+(distance+oldPlayerVelocity)/8f);
+            Main.NewText("fin crit: "+(int)bulletCrit);
+            Main.NewText("-----");
         }
     }
 }

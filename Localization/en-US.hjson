@@ -5,13 +5,12 @@ Mods: {
 				DisplayName: Denier T.D.S.R.
 				Tooltip:
 					'''
-					Uses ∞ mana
 					Unlike normal guns, this one can shoot only when in [c/ff0000:Scoping Mode].
-					[c/ff0000:{☩} Scoping Mode]: Hold Right Click to charge a rifle. Left Click to take a shot.
+					[c/ff0000:Scoping Mode]: Hold Right Click to charge a rifle. Left Click to take a shot.
 					As higher owner's movement speed and longer shooting distance as more damage rifle deals.
 					---
 					Holding a weapon grants to player [c/ff0000:Dash Point] (upon to 6).
-					[c/ff0000:{☩} Dash Point]: Left Click when not in [c/ff0000:Scoping Mode] to spend [c/ff0000:Dash Point] to make a dash.
+					[c/ff0000:Dash Point]: Left Click when not in [c/ff0000:Scoping Mode] to spend [c/ff0000:Dash Point] to make a dash.
 					---
 					The best magic invention of Divine Blacksmith.
 					'''
@@ -37,6 +36,11 @@ Mods: {
 				DisplayName: Scoping Process
 				Description: You're scoping right now!
 			}
+		}
+
+		BetterTooltips: {
+			DenierDamage: 0 -> ∞ ranged damage
+			DenierMana: Uses 10-15 mana
 		}
 	}
 }

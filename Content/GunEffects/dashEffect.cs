@@ -11,7 +11,7 @@ namespace Denier.Content.GunEffects {
     public class dashEffect:ModProjectile {
         public override string Texture => "Denier/Content/Global-Textures/blankPixel";
         SoundStyle bassSound = new SoundStyle("Denier/Sounds/bass");
-
+        private bool playSound;
         public override void SetDefaults() {
             Projectile.width = 1;
             Projectile.height = 1;
@@ -21,10 +21,6 @@ namespace Denier.Content.GunEffects {
             Projectile.Opacity = 0.01f;
             Projectile.ignoreWater = true;
         }
-        public override void OnSpawn(IEntitySource source) {
-            Player player = Main.player[Projectile.owner];
-            SoundEngine.PlaySound(bassSound with {MaxInstances = 3});
-        }
         public override void AI() {
             Projectile.netImportant = true;
             Projectile.netUpdate = true;
@@ -32,6 +28,11 @@ namespace Denier.Content.GunEffects {
             Projectile.ai[0]++;
 
             Player player = Main.player[Projectile.owner];
+
+            if(!playSound) {
+                SoundEngine.PlaySound(bassSound with {MaxInstances = 3}, player.Center);
+                playSound = true;
+            }
 
             if(Projectile.ai[0] <= 10) {
                 Lighting.AddLight(player.Center, 0.4f*(Projectile.ai[0]/10), 0f, 0f);
