@@ -1,17 +1,16 @@
+using System;
+using System.Collections.Generic;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Terraria;
-using Terraria.GameContent.UI.Elements;
-using Terraria.ModLoader;
 using Terraria.UI;
-using Terraria.GameContent;
-using Terraria.Localization;
-using System.Collections.Generic;
+using Terraria.ModLoader;
+using Terraria.GameContent.UI.Elements;
 using Denier.Content.Items.Denier;
-using System;
+using Denier.Content.Utils.TerrariaOverhaulFixes;
 
 namespace Denier.Content.UI {
-	internal class drUI:UIState {
+	internal class DenierUI:UIState {
 		private UIText Counter;
 		private UIText Length;
 		private UIElement Area;
@@ -45,8 +44,13 @@ namespace Denier.Content.UI {
 			);
 			
 			if(!Main.LocalPlayer.dead) {
-				if(Main.LocalPlayer.statMana >= 10) Counter.TextColor = new Color(255f,0f,0f);
-				else Counter.TextColor = new Color(255f/2f,255f/2f,255f/2f);
+				if((Main.LocalPlayer.HeldItem.ModItem is DenierRifle && Main.LocalPlayer.statMana >= 10) ||
+					(Main.LocalPlayer.HeldItem.ModItem is DenierExtend && Main.LocalPlayer.statMana >= 20))
+					{
+						Counter.TextColor = new Color(255f,0f,0f);
+					} else {
+						Counter.TextColor = new Color(255f/2f,255f/2f,255f/2f);
+					}
 
 				Length.TextColor = new Color((float)Math.Round(Main.LocalPlayer.velocity.Length())/20f,0f,0f);
 			}
@@ -55,7 +59,12 @@ namespace Denier.Content.UI {
 				Length.TextColor = new Color(0,0,0,0);
 			}	
 			Length.SetText(Math.Round(Main.LocalPlayer.velocity.Length()).ToString(), scaleValue, false);	
-			Counter.SetText(denierRifle.dashCount.ToString(), scaleValue, false);	
+			if(Main.LocalPlayer.HeldItem.ModItem is DenierRifle) {
+				Counter.SetText(DenierRifle.dashCount.ToString(), scaleValue, false);	
+			} else if(Main.LocalPlayer.HeldItem.ModItem is DenierExtend) {
+				Counter.SetText(DenierExtend.dashCountExtended.ToString(), scaleValue, false);	
+			}
+				
 		}
 
 		private void SetRectangle(UIElement uiElement, float left, float top, float width, float height) {
@@ -65,30 +74,32 @@ namespace Denier.Content.UI {
 			uiElement.Height.Set(height, 0f);
 		}
 		public override void Draw(SpriteBatch spriteBatch) {
-			if (Main.LocalPlayer.HeldItem.ModItem is denierRifle) {
+			if(Main.LocalPlayer.sleeping.isSleeping || !DenierTools.notAtAction(Main.LocalPlayer)) {
+                return;
+            }
+			if (Main.LocalPlayer.HeldItem.ModItem is DenierRifle || Main.LocalPlayer.HeldItem.ModItem is DenierExtend) {
 				base.Draw(spriteBatch);
 			}
 		}
-		
 	}
-	class denierRifleUISystem:ModSystem {
-		private UserInterface denierRifleUserInterface;
-		internal drUI denierRifleUI;
+	class DenierUISystem:ModSystem {
+		private UserInterface DenierUserInterface;
+		internal DenierUI denierUI;
 		public void ShowMyUI() {
-			denierRifleUserInterface?.SetState(denierRifleUI);
+			DenierUserInterface?.SetState(denierUI);
 		}
 		public void HideMyUI() {
-			denierRifleUserInterface?.SetState(null);
+			DenierUserInterface?.SetState(null);
 		}
 		public override void Load() {
 			if (!Main.dedServ) {
-				denierRifleUI = new();
-				denierRifleUserInterface = new();
-				denierRifleUserInterface.SetState(denierRifleUI);
+				denierUI = new();
+				DenierUserInterface = new();
+				DenierUserInterface.SetState(denierUI);
 			}
 		}
 		public override void UpdateUI(GameTime gameTime) {
-			denierRifleUserInterface?.Update(gameTime);
+			DenierUserInterface?.Update(gameTime);
 		}
 		public override void ModifyInterfaceLayers(List<GameInterfaceLayer> layers) {
 			int resourceBarIndex = layers.FindIndex(layer => layer.Name.Equals("Vanilla: Resource Bars"));
@@ -96,7 +107,7 @@ namespace Denier.Content.UI {
 				layers.Insert(resourceBarIndex, new LegacyGameInterfaceLayer(
 					"Denier: DashCounter",
 					delegate {
-						denierRifleUserInterface.Draw(Main.spriteBatch, new GameTime());
+						DenierUserInterface.Draw(Main.spriteBatch, new GameTime());
 						return true;
 					},
 					InterfaceScaleType.UI)

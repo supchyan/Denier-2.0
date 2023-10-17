@@ -1,15 +1,14 @@
-using System;
-using Microsoft.Xna.Framework;
-using Microsoft.Xna.Framework.Graphics;
-using Terraria;
-using Terraria.DataStructures;
-using Terraria.ModLoader;
-using Terraria.Audio;
+
 using System.IO;
-using Denier.Content.Items.Denier;
+using Microsoft.Xna.Framework;
+using Terraria;
+using Terraria.Audio;
+using Terraria.ModLoader;
+using Terraria.DataStructures;
 
 namespace Denier.Content.Projectiles.SpiritalCircle {
-    public class sigilSquareOut : ModProjectile {
+    public class SigilSquareOut : ModProjectile {
+        public override string Texture => "Denier/Content/Projectiles/SpiritalCircle/Textures/sigilSquare";
         private int lifeTime = 10;
         SoundStyle noteSound = new SoundStyle("Denier/Sounds/note");
         public override void SetDefaults() {

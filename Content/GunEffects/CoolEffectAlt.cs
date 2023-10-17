@@ -1,13 +1,14 @@
 using System;
+using System.IO;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Terraria;
-using Terraria.DataStructures;
 using Terraria.ModLoader;
-using System.IO;
+using Terraria.DataStructures;
 
 namespace Denier.Content.GunEffects {
-    public class coolEffectAlt:ModProjectile {
+    public class CoolEffectAlt:ModProjectile {
+        public override string Texture => "Denier/Content/GunEffects/Textures/coolEffectAlt";
         public int valueY;
         public override void SetStaticDefaults() {
             Main.projFrames[Projectile.type] = 2;

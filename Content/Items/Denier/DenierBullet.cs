@@ -1,14 +1,15 @@
 using System;
 using Microsoft.Xna.Framework;
 using Terraria;
-using Terraria.DataStructures;
 using Terraria.ID;
 using Terraria.Audio;
 using Terraria.ModLoader;
-using Microsoft.CodeAnalysis;
+using Terraria.DataStructures;
 
 namespace Denier.Content.Items.Denier {
-    public class denierRifleBullet:ModProjectile {
+    public class DenierBullet:ModProjectile {
+        public override string Texture => "Denier/Content/Items/Denier/Textures/denierBullet";
+        public SoundStyle shotSound = new SoundStyle("Denier/Sounds/shot");
         public override void SetDefaults() {
             Projectile.width = 25;
             Projectile.height = 25;
@@ -19,14 +20,13 @@ namespace Denier.Content.Items.Denier {
             Projectile.tileCollide = false;
             Projectile.penetrate = 3;
         }
-        public SoundStyle shotSound = new SoundStyle("Denier/Sounds/shot");
-        private float bulletDamage;
-        private float bulletCrit;
+        public static float bulletDamage;
+        public static float bulletCrit;
         private Vector2 oldPlayerCenter;
-        private float oldPlayerVelocity;
+        public static float oldPlayerVelocity;
         private float oldDamage;
         private float oldCrit;
-        private float distance;
+        public static float distance;
         private bool playSound;
         public override void OnSpawn(IEntitySource source) {
             oldDamage = Projectile.damage;
@@ -58,12 +58,18 @@ namespace Denier.Content.Items.Denier {
             Projectile.damage = (int)bulletDamage;
             Projectile.CritChance = (int)bulletCrit;
 
-            Projectile.rotation = Projectile.velocity.ToRotation();
-            Projectile.velocity = Projectile.velocity * (1f - (Projectile.ai[0] / 480f));
+            Projectile.rotation = Projectile.velocity.ToRotation();            
 
             Projectile.ai[0]++;
+
+            if(!DenierExtend.equiped) {
+                Projectile.velocity = Projectile.velocity*(1f-(Projectile.ai[0]/480f));
+            }
+            else {
+                Projectile.velocity = Projectile.velocity*(1f-(Projectile.ai[0]/1250f));
+            }
             
-            if(Projectile.ai[0] > 60)
+            if(Projectile.velocity.Length() < 0.1f)
                 Projectile.Kill();   
 
             Dust shotTrail = Dust.NewDustPerfect(Projectile.Center - new Vector2(0f, 2f), DustID.PortalBolt, new Vector2(0f, 0f).DirectionTo(player.Center), 255, new Color(255f, 209f, 178f), 1f);
@@ -83,18 +89,6 @@ namespace Denier.Content.Items.Denier {
         }
         public override Color? GetAlpha(Color lightColor) {
 			return new Color(255f, 209f, 178f) * Projectile.Opacity;
-        }
-        public void showStats() {
-            Main.NewText("-----");
-            Main.NewText("gun dist: " + distance);
-            Main.NewText("player vel: " + oldPlayerVelocity);
-            Main.NewText("-----");
-            Main.NewText("dmg mul: "+(distance/2f+oldPlayerVelocity)/30f);
-            Main.NewText("fin dmg: "+(int)bulletDamage);
-            Main.NewText("-----");
-            Main.NewText("crit bonus: "+(distance+oldPlayerVelocity)/8f);
-            Main.NewText("fin crit: "+(int)bulletCrit);
-            Main.NewText("-----");
         }
     }
 }

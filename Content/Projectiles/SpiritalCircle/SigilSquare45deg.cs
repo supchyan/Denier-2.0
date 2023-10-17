@@ -1,16 +1,15 @@
 using System;
-using Microsoft.Xna.Framework;
-using Microsoft.Xna.Framework.Graphics;
-using Terraria;
-using Terraria.Audio;
-using Terraria.DataStructures;
-using Terraria.ModLoader;
 using System.IO;
+using Microsoft.Xna.Framework;
+using Terraria;
+using Terraria.ModLoader;
+using Terraria.DataStructures;
 using Denier.Content.Buffs;
 using Denier.Content.Items.Denier;
 
 namespace Denier.Content.Projectiles.SpiritalCircle {
-    public class sigilSquare : ModProjectile {
+    public class SigilSquare45deg : ModProjectile {
+        public override string Texture => "Denier/Content/Projectiles/SpiritalCircle/Textures/sigilSquare45deg";
         public override void SetDefaults() {
             Projectile.width = 128;
             Projectile.height = 128;
@@ -21,17 +20,16 @@ namespace Denier.Content.Projectiles.SpiritalCircle {
             Projectile.Opacity = 1f;
             Projectile.ignoreWater = true;
         }
-        private bool playItOneTime;
-        public static float oldRot;
-        public static bool canShoot;
-        public static bool rotRes;
         public Vector2 projPos;
+        public static bool rotRes;
         public int red = 255;
         public int green = 255;
         public int blue = 255;
+        private double e = 2.7182812;
+        private double b = -0.08759;
         public override void OnSpawn(IEntitySource source) {
             Player player = Main.player[Projectile.owner];
-            projPos = player.Center - new Vector2(Projectile.width / 2f, Projectile.height / 2f);
+            projPos = player.Center - new Vector2(Projectile.width / 2f, Projectile.height / 2f);   
         }
         public override void AI() {
             Projectile.netImportant = true;
@@ -42,47 +40,38 @@ namespace Denier.Content.Projectiles.SpiritalCircle {
             Lighting.AddLight(Projectile.Center, red/255*Projectile.Opacity, green/255, blue/255);
             
             Player player = Main.player[Projectile.owner];
-
-            if(Projectile.ai[1] >= 45 && player.statMana>=15) {                
-                oldRot = Projectile.rotation;
-
-                red = 255;
-                green = 0;
-                blue = 0;
-
-                if(!canShoot) {
-                    canShoot = true;
-                    playItOneTime = true;
-                } else
-                if(canShoot && player.statMana >= 15 && playItOneTime) {
-                    playItOneTime = false;
-                    if (player.whoAmI == Main.myPlayer && player.ownedProjectileCounts[ModContent.ProjectileType<sigilSquareOut>()] == 0) {
-                        Projectile.NewProjectile(
-                            Projectile.GetSource_None(), player.Center,
-                            Vector2.Zero, ModContent.ProjectileType<sigilSquareOut>(), 0, 0, player.whoAmI
-                        );
-                    }
-                } 
+            if(!DenierExtend.equiped) {
+                if(Projectile.ai[1] >= 45 && player.statMana >= 15) {                
+                    red = 255;
+                    green = 0;
+                    blue = 0;
+                } else {
+                    red = 255;
+                    green = 255;
+                    blue = 255;
+                }
+                float a = 240f; // max angle
+                Projectile.rotation = -MathHelper.ToRadians(2*a*(float)Math.Pow(e,1.5f*b*Projectile.ai[1])*(float)Math.Sin(Projectile.ai[1]/6));
             } else {
-                red = 255;
-                green = 255;
-                blue = 255;
+                if(Projectile.ai[1] >= 10 && player.statMana >= 20) {                
+                    red = 255;
+                    green = 0;
+                    blue = 0;
+                } else {
+                    red = 255;
+                    green = 255;
+                    blue = 255;
+                }
+                float a = 90f; // max angle
+                Projectile.rotation = -MathHelper.ToRadians(2*a*(float)Math.Pow(e,1.5f*b*Projectile.ai[1])*(float)Math.Sin(Projectile.ai[1]/6));
             }
-            if(player.altFunctionUse == 0 && rotRes) {
-                Projectile.ai[1]=0;
-                rotRes = false;
-            }
-            double e = 2.7182812;
-            float a = 240f; // max angle
-            double b = -0.08759;
-
-            Projectile.rotation = MathHelper.ToRadians(2*a*(float)Math.Pow(e,1.5f*b*Projectile.ai[1])*(float)Math.Sin(Projectile.ai[1]/6))+(float)Math.PI/4;
+            
 
             projPos = player.Center - new Vector2(Projectile.width / 2f, Projectile.height / 2f);
 
             int dieTime = 10;
             if(!player.HasBuff<scopingBuff>() || player.dead) {
-                Projectile.ai[2]+=0.9f;
+                Projectile.ai[2]+=0.8f;
                 double lerpValue = Projectile.ai[2]/dieTime;
 
                 if (Projectile.ai[2] <= dieTime) {
@@ -101,10 +90,14 @@ namespace Denier.Content.Projectiles.SpiritalCircle {
                 }
                 Projectile.Opacity = 1f;
             }
+            if(player.altFunctionUse == 0 && rotRes) {
+                Projectile.ai[1]=0;
+                rotRes = false;
+            }
             
             Projectile.position = projPos;
                 
-            if(player.HeldItem.ModItem is not denierRifle || Projectile.Opacity <= 0.2f)
+            if((player.HeldItem.ModItem is not DenierRifle && player.HeldItem.ModItem is not DenierExtend) || Projectile.Opacity <= 0.2f)
                 Projectile.Kill();
         }
         public override Color? GetAlpha(Color lightColor) {
@@ -112,14 +105,12 @@ namespace Denier.Content.Projectiles.SpiritalCircle {
 		}
         public override void SendExtraAI(BinaryWriter writer) {
 			writer.WriteVector2(projPos);
-            writer.Write(canShoot);
             writer.Write(red);
             writer.Write(green);
             writer.Write(blue);
 		}
         public override void ReceiveExtraAI(BinaryReader reader) {
             projPos = reader.ReadVector2();
-            canShoot = reader.ReadBoolean();
             red = reader.ReadInt32();
             green = reader.ReadInt32();
             blue = reader.ReadInt32();

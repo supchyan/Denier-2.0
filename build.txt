@@ -1,6 +1,6 @@
 displayName = [c/c2c2c2:Denier] [c/6a6a6a:- The Divinity Sniper Rifle]
 author = Divine Blacksmith
-version = 2.1.9
+version = 2.2
 modReferences = TerrariaOverhaul
 hideCode = true
 hideResources = true

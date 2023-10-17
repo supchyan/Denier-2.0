@@ -7,7 +7,9 @@ Cool visuals and multiplayer support! ^^[/hr]
 [code]
 Craft: 
 - Handgun;
-- Titanium / Adamantite Bar x75;
-- Wire x75;
-- Greater Mana Potion x25.
+- Eye Patch;
+- Soul of Night x40;
+- Soul of Light x40;
+- Titanium / Adamantite Bar x25;
+- Hellstone Bar x25.
 [/code]

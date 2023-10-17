@@ -1,12 +1,13 @@
 using System;
+using System.IO;
 using Microsoft.Xna.Framework;
 using Terraria;
-using Terraria.DataStructures;
 using Terraria.ModLoader;
-using System.IO;
+using Terraria.DataStructures;
 
 namespace Denier.Content.GunEffects {
-    public class shell:ModProjectile {
+    public class Shell:ModProjectile {
+        public override string Texture => "Denier/Content/GunEffects/Textures/shell";
         public int oldDir;
         public double offsetX;
         public double offsetY;

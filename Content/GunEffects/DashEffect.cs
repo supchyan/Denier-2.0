@@ -1,16 +1,13 @@
-using System;
 using Microsoft.Xna.Framework;
 using Terraria;
-using Terraria.DataStructures;
-using Terraria.ModLoader;
 using Terraria.ID;
-using System.IO;
 using Terraria.Audio;
+using Terraria.ModLoader;
 
 namespace Denier.Content.GunEffects {
-    public class dashEffect:ModProjectile {
+    public class DashEffect:ModProjectile {
         public override string Texture => "Denier/Content/Global-Textures/blankPixel";
-        SoundStyle bassSound = new SoundStyle("Denier/Sounds/bass");
+        SoundStyle dashSound = new SoundStyle("Denier/Sounds/newDash");
         private bool playSound;
         public override void SetDefaults() {
             Projectile.width = 1;
@@ -30,7 +27,7 @@ namespace Denier.Content.GunEffects {
             Player player = Main.player[Projectile.owner];
 
             if(!playSound) {
-                SoundEngine.PlaySound(bassSound with {MaxInstances = 3}, player.Center);
+                SoundEngine.PlaySound(dashSound with {MaxInstances = 3}, player.Center);
                 playSound = true;
             }
 

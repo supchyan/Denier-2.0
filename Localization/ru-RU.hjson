@@ -1,7 +1,7 @@
 Mods: {
 	Denier: {
 		Items: {
-			denierRifle: {
+			DenierRifle: {
 				DisplayName: Отрицатель T.D.S.R.
 				Tooltip:
 					'''
@@ -9,26 +9,35 @@ Mods: {
 					[c/ff0000:Режим прицеливания]: Удерживайте Правую Кнопку Мыши, чтобы зарядить винтовку. Левая Кнопка Мыши, чтобы сделать выстрел.
 					Чем быстрее движется стрелок и чем дальше летит пуля, тем выше наносимый урон.
 					---
-					Пока вы держите винтовку, она заряжает [c/ff0000:Очки рывков] (максимум: 6).
+					Пока вы держите винтовку, она заряжает [c/ff0000:Очки рывков] (максимум: 3).
 					[c/ff0000:Очки рывков]: Нажмите Левую Кнопку Мыши, когда персонаж не в [c/ff0000:Режиме прицеливания], чтобы потратить [c/ff0000:Очки рывков] и ускориться.
 					---
 					Лучшее магическое оружие, выкованное Божественным Кузнецом.
 					'''
 				DamageInfo: ъеь?
 			}
+
+			DenierExtend: {
+				DisplayName: ???
+				Tooltip: ???
+			}
 		}
 
 		Projectiles: {
-			denierRifleBullet.DisplayName: Пуля отрицания
-			coolEffect.DisplayName: Запретная магия
-			coolEffectAlt.DisplayName: Запретная магия
-			shell.DisplayName: Гильза
-			sigilCircle.DisplayName: Запретная магия
-			sigilCircleSmall.DisplayName: Запретная магия
-			sigilSquare.DisplayName: Запретная магия
-			sigilSquare45deg.DisplayName: Запретная магия
-			sigilSquareOut.DisplayName: Запретная магия
-			dashEffect.DisplayName: Запретная магия
+			CoolEffect.DisplayName: Запретная магия
+			CoolEffectAlt.DisplayName: Запретная магия
+			DashEffect.DisplayName: Запретная магия
+			Shell.DisplayName: Гильза
+			DenierBullet.DisplayName: Пуля отрицания
+			SigilCircle.DisplayName: Запретная магия
+			SigilCircleSmall.DisplayName: Запретная магия
+			SigilSquare.DisplayName: Запретная магия
+			SigilSquare45deg.DisplayName: Запретная магия
+			SigilSquareOut.DisplayName: Запретная магия
+			DenierExtendGlowMask.DisplayName: Отрицатель
+			DenierExtendInHands.DisplayName: Отрицатель
+			DenierInHands.DisplayName: Отрицатель
+			// BeamScope.DisplayName: Beam Scope
 		}
 
 		Buffs: {
@@ -41,6 +50,8 @@ Mods: {
 		BetterTooltips: {
 			DenierDamage: 0 -> ∞ дистанционный урон
 			DenierMana: Использует 10-15 маны
+			DenierExtendDamage: 0 -> ∞ дистанционный урон
+			DenierExtendMana: Использует 20 маны
 		}
 	}
 }

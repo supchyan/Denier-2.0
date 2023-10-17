@@ -1,7 +1,7 @@
 Mods: {
 	Denier: {
 		Items: {
-			denierRifle: {
+			DenierRifle: {
 				DisplayName: Denier T.D.S.R.
 				Tooltip:
 					'''
@@ -9,26 +9,35 @@ Mods: {
 					[c/ff0000:Scoping Mode]: Hold Right Click to charge a rifle. Left Click to take a shot.
 					As higher owner's movement speed and longer shooting distance as more damage rifle deals.
 					---
-					Holding a weapon grants to player [c/ff0000:Dash Point] (upon to 6).
+					Holding a weapon grants to player [c/ff0000:Dash Point] (upon to 3).
 					[c/ff0000:Dash Point]: Left Click when not in [c/ff0000:Scoping Mode] to spend [c/ff0000:Dash Point] to make a dash.
 					---
 					The best magic invention of Divine Blacksmith.
 					'''
 				DamageInfo: ehe?
 			}
+
+			DenierExtend: {
+				DisplayName: ???
+				Tooltip: ???
+			}
 		}
 
 		Projectiles: {
-			denierRifleBullet.DisplayName: Denier Bullet
-			coolEffect.DisplayName: Forbidden magic
-			coolEffectAlt.DisplayName: Forbidden magic
-			shell.DisplayName: Gun shell
-			sigilCircle.DisplayName: Forbidden magic
-			sigilCircleSmall.DisplayName: Forbidden magic
-			sigilSquare.DisplayName: Forbidden magic
-			sigilSquare45deg.DisplayName: Forbidden magic
-			sigilSquareOut.DisplayName: Forbidden magic
-			dashEffect.DisplayName: Forbidden magic
+			CoolEffect.DisplayName: Forbidden magic
+			CoolEffectAlt.DisplayName: Forbidden magic
+			DashEffect.DisplayName: Forbidden magic
+			Shell.DisplayName: Shell
+			DenierBullet.DisplayName: Denier bullet
+			SigilCircle.DisplayName: Forbidden magic
+			SigilCircleSmall.DisplayName: Forbidden magic
+			SigilSquare.DisplayName: Forbidden magic
+			SigilSquare45deg.DisplayName: Forbidden magic
+			SigilSquareOut.DisplayName: Forbidden magic
+			DenierExtendGlowMask.DisplayName: Denier
+			DenierExtendInHands.DisplayName: Denier
+			DenierInHands.DisplayName: Denier
+			BeamScope.DisplayName: Beam Scope
 		}
 
 		Buffs: {
@@ -41,6 +50,8 @@ Mods: {
 		BetterTooltips: {
 			DenierDamage: 0 -> ∞ ranged damage
 			DenierMana: Uses 10-15 mana
+			DenierExtendDamage: 0 -> ∞ ranged damage
+			DenierExtendMana: Uses 20 mana
 		}
 	}
 }
