@@ -34,10 +34,10 @@ Mods: {
 			SigilSquare.DisplayName: Запретная магия
 			SigilSquare45deg.DisplayName: Запретная магия
 			SigilSquareOut.DisplayName: Запретная магия
+			BeamScope.DisplayName: Запретная магия
 			DenierExtendGlowMask.DisplayName: Отрицатель
 			DenierExtendInHands.DisplayName: Отрицатель
 			DenierInHands.DisplayName: Отрицатель
-			// BeamScope.DisplayName: Beam Scope
 		}
 
 		Buffs: {

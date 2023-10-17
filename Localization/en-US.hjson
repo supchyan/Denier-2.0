@@ -34,10 +34,10 @@ Mods: {
 			SigilSquare.DisplayName: Forbidden magic
 			SigilSquare45deg.DisplayName: Forbidden magic
 			SigilSquareOut.DisplayName: Forbidden magic
+			BeamScope.DisplayName: Forbidden magic
 			DenierExtendGlowMask.DisplayName: Denier
 			DenierExtendInHands.DisplayName: Denier
 			DenierInHands.DisplayName: Denier
-			BeamScope.DisplayName: Beam Scope
 		}
 
 		Buffs: {
