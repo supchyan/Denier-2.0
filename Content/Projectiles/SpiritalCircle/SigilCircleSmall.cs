@@ -70,7 +70,7 @@ namespace Denier.Content.Projectiles.SpiritalCircle {
             projPos = player.Center - new Vector2(Projectile.width / 2f, Projectile.height / 2f);
 
             int dieTime = 10;
-            if(!player.HasBuff<scopingBuff>() || player.dead) {
+            if(!player.HasBuff<ScopingBuff>() || player.dead) {
                 Projectile.ai[2]+=0.8f;
                 double lerpValue = Projectile.ai[2]/dieTime;
 

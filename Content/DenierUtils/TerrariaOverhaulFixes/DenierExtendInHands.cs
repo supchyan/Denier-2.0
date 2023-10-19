@@ -5,9 +5,9 @@ using Terraria.ModLoader;
 using Terraria.DataStructures;
 using Denier.Content.Items.Denier;
 
-namespace Denier.Content.Utils.TerrariaOverhaulFixes {
-    public class DenierInHands:ModProjectile {
-        public override string Texture => "Denier/Content/Items/Denier/Textures/denier";
+namespace Denier.Content.DenierUtils.TerrariaOverhaulFixes {
+    public class DenierExtendInHands:ModProjectile {
+        public override string Texture => "Denier/Content/Items/Denier/Textures/denierExtend";
         public override void SetDefaults() {
             Projectile.width = 64;
             Projectile.height = 17;
@@ -36,8 +36,9 @@ namespace Denier.Content.Utils.TerrariaOverhaulFixes {
             Projectile.spriteDirection = player.direction;
             Projectile.position = player.Center - new Vector2(Projectile.width/2f,Projectile.height/2f);
 
-            if((player.HeldItem.ModItem is not DenierRifle) || !DenierTools.notAtAction(player))
+            if((player.HeldItem.ModItem is not DenierExtend) || !DenierTools.notAtAction(player)) {
                 Projectile.Kill();
+            }
         }
         SpriteEffects spriteEffects;
         Vector2 origin;

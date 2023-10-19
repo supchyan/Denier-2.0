@@ -38,12 +38,18 @@ Mods: {
 			DenierExtendGlowMask.DisplayName: Отрицатель
 			DenierExtendInHands.DisplayName: Отрицатель
 			DenierInHands.DisplayName: Отрицатель
+			// Tentacle.DisplayName: Tentacle
 		}
 
 		Buffs: {
 			scopingBuff: {
 				DisplayName: В процессе прицеливания
 				Description: Вы прицеливаетесь прямо сейчас!
+			}
+
+			ScopingBuff: {
+				// DisplayName: Scoping Buff
+				// Description: Mods.Denier.Buffs.ScopingBuff.Description
 			}
 		}
 

@@ -1,5 +1,3 @@
-using System;
-using System.Collections.Generic;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Terraria;
@@ -7,9 +5,9 @@ using Terraria.ModLoader;
 using Terraria.DataStructures;
 using Denier.Content.Items.Denier;
 
-namespace Denier.Content.Utils.TerrariaOverhaulFixes {
-    public class DenierExtendGlowMask:ModProjectile {
-        public override string Texture => "Denier/Content/Items/Denier/Textures/denierExtendGlowMask";
+namespace Denier.Content.DenierUtils.TerrariaOverhaulFixes {
+    public class DenierInHands:ModProjectile {
+        public override string Texture => "Denier/Content/Items/Denier/Textures/denier";
         public override void SetDefaults() {
             Projectile.width = 64;
             Projectile.height = 17;
@@ -30,7 +28,7 @@ namespace Denier.Content.Utils.TerrariaOverhaulFixes {
             Projectile.netUpdate = true;
             
             Player player = Main.player[Projectile.owner];
-            // player.heldProj = Projectile.whoAmI;
+            player.heldProj = Projectile.whoAmI;
 
             Projectile.ai[0]++;
 
@@ -38,12 +36,11 @@ namespace Denier.Content.Utils.TerrariaOverhaulFixes {
             Projectile.spriteDirection = player.direction;
             Projectile.position = player.Center - new Vector2(Projectile.width/2f,Projectile.height/2f);
 
-            if((player.HeldItem.ModItem is not DenierExtend) || !DenierTools.notAtAction(player))
+            if((player.HeldItem.ModItem is not DenierRifle) || !DenierTools.notAtAction(player))
                 Projectile.Kill();
         }
-        private SpriteEffects spriteEffects;
-        private Vector2 origin;
-        private float lerpAlpha;
+        SpriteEffects spriteEffects;
+        Vector2 origin;
         public override bool PreDraw(ref Color lightColor) {
             Player player = Main.player[Projectile.owner];
 
@@ -72,15 +69,10 @@ namespace Denier.Content.Utils.TerrariaOverhaulFixes {
 			
 			Color drawColor = Projectile.GetAlpha(lightColor);
 
-            lerpAlpha = (float)Math.Sqrt(Math.Abs(Math.Cos(Projectile.ai[0]/20f)));
-
 			Main.EntitySpriteDraw(texture,
 				Projectile.Center-Main.screenPosition+new Vector2(0f, Projectile.gfxOffY),
-				sourceRectangle, Color.White*lerpAlpha, Projectile.rotation, origin, 2*Projectile.scale, spriteEffects, 0);
+				sourceRectangle, lightColor, Projectile.rotation, origin, 2*Projectile.scale, spriteEffects, 0);
 			return false;
-		}
-        public override void DrawBehind(int index, List<int> behindNPCsAndTiles, List<int> behindNPCs, List<int> behindProjectiles, List<int> overPlayers, List<int> overWiresUI) {
-			overWiresUI.Add(index);
 		}
     }
 }

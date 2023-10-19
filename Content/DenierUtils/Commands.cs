@@ -2,7 +2,7 @@ using Terraria;
 using Terraria.ModLoader;
 using Denier.Content.Items.Denier;
 
-namespace Denier.Content.Utils {
+namespace Denier.Content.DenierUtils {
     public class Commands:ModPlayer {
         private bool _showStats;
         private bool _clearChat;

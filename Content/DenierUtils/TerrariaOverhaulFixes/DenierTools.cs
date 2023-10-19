@@ -1,7 +1,7 @@
 using Terraria;
 using Terraria.ModLoader;
 
-namespace Denier.Content.Utils.TerrariaOverhaulFixes {
+namespace Denier.Content.DenierUtils.TerrariaOverhaulFixes {
     public class DenierTools {
         public static bool notAtAction(Player player) {
             return

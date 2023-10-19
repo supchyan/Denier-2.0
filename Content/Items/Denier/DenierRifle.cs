@@ -10,7 +10,7 @@ using Terraria.Localization;
 using Denier.Content.Buffs;
 using Denier.Content.GunEffects;
 using Denier.Content.Projectiles.SpiritalCircle;
-using Denier.Content.Utils.TerrariaOverhaulFixes;
+using Denier.Content.DenierUtils.TerrariaOverhaulFixes;
 
 namespace Denier.Content.Items.Denier {
     public class DenierRifle : ModItem {
@@ -180,7 +180,7 @@ namespace Denier.Content.Items.Denier {
                 return; 
 
             if (Main.mouseRight && player.statMana >=15) {
-                player.AddBuff(ModContent.BuffType<scopingBuff>(), 1);
+                player.AddBuff(ModContent.BuffType<ScopingBuff>(), 1);
                 if (player.whoAmI == Main.myPlayer && player.ownedProjectileCounts[ModContent.ProjectileType<SigilCircle>()] == 0) {
                     Projectile.NewProjectile(
                         Projectile.GetSource_None(),

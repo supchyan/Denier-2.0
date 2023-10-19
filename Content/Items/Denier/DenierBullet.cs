@@ -44,10 +44,10 @@ namespace Denier.Content.Items.Denier {
             Player player = Main.player[Projectile.owner];
 
             if(!playSound) {
-                SoundEngine.PlaySound(shotSound with {MaxInstances = 3}, player.Center);
+                var tracker = new ProjectileAudioTracker(Projectile);
+                SoundEngine.PlaySound(shotSound with {MaxInstances = 3}, player.Center, soundInstance => AdvancedSoundUpdateCallback(tracker, soundInstance));
                 playSound = true;
             }
-
             // showStats();
 
             distance = (float)Math.Round(Projectile.Center.Distance(oldPlayerCenter)/16);
@@ -69,8 +69,9 @@ namespace Denier.Content.Items.Denier {
                 Projectile.velocity = Projectile.velocity*(1f-(Projectile.ai[0]/1250f));
             }
             
-            if(Projectile.velocity.Length() < 0.1f)
-                Projectile.Kill();   
+            if(Projectile.velocity.Length() < 0.1f) {
+                Projectile.Kill();  
+            }    
 
             Dust shotTrail = Dust.NewDustPerfect(Projectile.Center - new Vector2(0f, 2f), DustID.PortalBolt, new Vector2(0f, 0f).DirectionTo(player.Center), 255, new Color(255f, 209f, 178f), 1f);
             shotTrail.noGravity = true;
@@ -90,5 +91,20 @@ namespace Denier.Content.Items.Denier {
         public override Color? GetAlpha(Color lightColor) {
 			return new Color(255f, 209f, 178f) * Projectile.Opacity;
         }
+        private bool AdvancedSoundUpdateCallback(ProjectileAudioTracker tracker, ActiveSound soundInstance) {
+            Player player = Main.player[Projectile.owner];
+			soundInstance.Position = player.position;
+
+			// Dynamic pitch example: Pitch rises each time the projectile bounces
+			soundInstance.Pitch = (Projectile.maxPenetrate - Projectile.penetrate) * 0.15f;
+
+			// Muffle the sound if the projectile is wet
+			if(player.wet) {
+				soundInstance.Pitch -= 0.4f;
+				soundInstance.Volume = MathHelper.Clamp(soundInstance.Style.Volume - 0.4f, 0f, 1f);
+			}
+
+			return tracker.IsActiveAndInGame();
+		}
     }
 }

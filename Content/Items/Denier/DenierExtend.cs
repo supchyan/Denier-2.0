@@ -10,7 +10,7 @@ using Terraria.Localization;
 using Denier.Content.Buffs;
 using Denier.Content.GunEffects;
 using Denier.Content.Projectiles.SpiritalCircle;
-using Denier.Content.Utils.TerrariaOverhaulFixes;
+using Denier.Content.DenierUtils.TerrariaOverhaulFixes;
 
 namespace Denier.Content.Items.Denier {
     public class DenierExtend:ModItem {
@@ -145,14 +145,6 @@ namespace Denier.Content.Items.Denier {
             else return false;
         }
         public override void HoldItem(Player player) {
-            if (player.whoAmI == Main.myPlayer && player.ownedProjectileCounts[ModContent.ProjectileType<BeamScope>()] == 0) {
-                Projectile.NewProjectile(
-                    Projectile.GetSource_None(),
-                    player.Center,
-                    Vector2.Zero,
-                    ModContent.ProjectileType<BeamScope>(), 0, 0, player.whoAmI
-                );
-            }
             if(!DenierTools.notAtAction(player)) {
                 Item.useStyle = ItemUseStyleID.None;
                 return;
@@ -162,6 +154,14 @@ namespace Denier.Content.Items.Denier {
             equiped=true;
             player.scope = true;
 
+            if (player.whoAmI == Main.myPlayer && player.ownedProjectileCounts[ModContent.ProjectileType<BeamScope>()] == 0) {
+                Projectile.NewProjectile(
+                    Projectile.GetSource_None(),
+                    player.Center,
+                    Vector2.Zero,
+                    ModContent.ProjectileType<BeamScope>(), 0, 0, player.whoAmI
+                );
+            }
             if (player.whoAmI == Main.myPlayer && player.ownedProjectileCounts[ModContent.ProjectileType<DenierExtendInHands>()] == 0) {
                 Projectile.NewProjectile(
                     Projectile.GetSource_None(),
@@ -198,7 +198,7 @@ namespace Denier.Content.Items.Denier {
                 return; 
 
             if (Main.mouseRight && player.statMana>=20) {
-                player.AddBuff(ModContent.BuffType<scopingBuff>(), 1);
+                player.AddBuff(ModContent.BuffType<ScopingBuff>(), 1);
                 if (player.whoAmI == Main.myPlayer && player.ownedProjectileCounts[ModContent.ProjectileType<SigilCircle>()] == 0) {
                     Projectile.NewProjectile(
                         Projectile.GetSource_None(),

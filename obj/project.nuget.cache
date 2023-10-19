@@ -1,0 +1,10 @@
+{
+  "version": 2,
+  "dgSpecHash": "ZSYJvtRlQZiqLNg7saY4rqqPl1herKQYgzfzZvnNnF/UcZH2cxfsvfMXM/flUZOwdykHaEshMXI8KwgWpn4sPg==",
+  "success": true,
+  "projectFilePath": "/home/supchyan_/.local/share/Terraria/tModLoader/ModSources/Denier/Denier.csproj",
+  "expectedPackageFiles": [
+    "/home/supchyan_/.nuget/packages/tmodloader.codeassist/0.1.5/tmodloader.codeassist.0.1.5.nupkg.sha512"
+  ],
+  "logs": []
+}

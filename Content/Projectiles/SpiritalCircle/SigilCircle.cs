@@ -68,7 +68,7 @@ namespace Denier.Content.Projectiles.SpiritalCircle {
             projPos = player.Center - new Vector2(Projectile.width / 2f, Projectile.height / 2f);
 
             int dieTime = 10;
-            if(!player.HasBuff<scopingBuff>() || player.dead) {
+            if(!player.HasBuff<ScopingBuff>() || player.dead) {
                 Projectile.ai[2]++;
                 double lerpValue = Projectile.ai[2]/dieTime;
 
@@ -94,7 +94,7 @@ namespace Denier.Content.Projectiles.SpiritalCircle {
             
             Projectile.position = projPos;
                 
-            if((player.HeldItem.ModItem is not DenierRifle && player.HeldItem.ModItem is not DenierExtend)|| Projectile.Opacity <= 0.01f)
+            if((player.HeldItem.ModItem is not DenierRifle && player.HeldItem.ModItem is not DenierExtend) || Projectile.Opacity <= 0.01f)
                 Projectile.Kill();
         }
         public override Color? GetAlpha(Color lightColor) {

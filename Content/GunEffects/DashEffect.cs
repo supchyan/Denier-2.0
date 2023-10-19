@@ -40,7 +40,7 @@ namespace Denier.Content.GunEffects {
             
 
             Dust dust =  Dust.NewDustDirect(player.Center, player.width/2, player.height/2, DustID.LavaMoss,0,0,1,Color.Red, 2f);
-            dust.noGravity = true;      
+            dust.noGravity = true;   
 
             if(Projectile.ai[0] <= 30) {
                 player.fullRotation=MathHelper.ToRadians(-Projectile.ai[0]*24*player.direction);
