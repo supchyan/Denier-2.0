@@ -21,6 +21,11 @@ Mods: {
 				DisplayName: ???
 				Tooltip: ???
 			}
+
+			ExampleLastPrism: {
+				DisplayName: Example Last Prism
+				Tooltip: ""
+			}
 		}
 
 		Projectiles: {
@@ -39,6 +44,9 @@ Mods: {
 			DenierExtendInHands.DisplayName: Denier
 			DenierInHands.DisplayName: Denier
 			Tentacle.DisplayName: Tentacle
+			ExampleLastPrismBeam.DisplayName: Example Last Prism Beam
+			ExampleLastPrismHoldout.DisplayName: Example Last Prism Holdout
+			BeamPoint.DisplayName: Beam Point
 		}
 
 		Buffs: {

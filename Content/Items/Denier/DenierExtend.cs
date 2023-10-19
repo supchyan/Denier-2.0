@@ -154,12 +154,12 @@ namespace Denier.Content.Items.Denier {
             equiped=true;
             player.scope = true;
 
-            if (player.whoAmI == Main.myPlayer && player.ownedProjectileCounts[ModContent.ProjectileType<BeamScope>()] == 0) {
+            if (player.whoAmI == Main.myPlayer && player.ownedProjectileCounts[ModContent.ProjectileType<BeamPoint>()] == 0) {
                 Projectile.NewProjectile(
                     Projectile.GetSource_None(),
                     player.Center,
                     Vector2.Zero,
-                    ModContent.ProjectileType<BeamScope>(), 0, 0, player.whoAmI
+                    ModContent.ProjectileType<BeamPoint>(), 0, 0, player.whoAmI
                 );
             }
             if (player.whoAmI == Main.myPlayer && player.ownedProjectileCounts[ModContent.ProjectileType<DenierExtendInHands>()] == 0) {
